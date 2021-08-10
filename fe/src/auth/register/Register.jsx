@@ -94,7 +94,6 @@ const Register = (props) => {
             </form>
           )}
         </Formik>
-        ;
       </div>
     </Container>
   );
