@@ -1,0 +1,12 @@
+{
+  "test": "itsnotatest",
+  "login": {
+    "form": {
+      "header": "sign in",
+      "pw": "password",
+      "email": "email",
+      "button": "login",
+      "email-error": "invalid email"
+    }
+  }
+}
