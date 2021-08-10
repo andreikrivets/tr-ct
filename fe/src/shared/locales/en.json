@@ -6,7 +6,18 @@
       "pw": "password",
       "email": "email",
       "button": "login",
-      "email-error": "invalid email"
+      "emailError": "invalid email"
+    }
+  },
+  "register": {
+    "form": {
+      "firstName": "first name",
+      "lastName": "last name",
+      "header": "sign up",
+      "pw": "password",
+      "email": "email",
+      "button": "sign up",
+      "emailError": "invalid email"
     }
   }
 }

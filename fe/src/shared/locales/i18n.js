@@ -7,12 +7,12 @@ import ru from "./ru.json";
 i18n.use(initReactI18next).init({
   resources: {
     en: {
-      auth: en,
       login: en.login,
+      register: en.register,
     },
     ru: {
-      auth: ru,
       login: ru.login,
+      register: ru.register,
     },
   },
   fallbackLng: "en",
