@@ -3,33 +3,37 @@ import { Avatar, Button, CssBaseline, TextField, Typography, Container } from "@
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Formik } from "formik";
 import { withTranslation } from "react-i18next";
+import Skeleton from "react-loading-skeleton";
+
+import validator from "./validator";
 
 const Login = (props) => {
-  const { t } = props;
+  const { t, login, isLoading } = props;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div>
         <Avatar>
-          <LockOutlinedIcon />
+          {isLoading ? <Skeleton circle height={50} width={50} /> : <LockOutlinedIcon />}
         </Avatar>
         <Typography component="h1" variant="h5">
-          {t("form.header")}
+          {isLoading ? <Skeleton /> : t("form.header")}
         </Typography>
         <Formik
           initialValues={{ email: "", password: "" }}
-          validate={(values) => {
-            const errors = {};
-            if (!values.email) {
-              errors.email = "Required";
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-              errors.email = `${t("form.emailError")}`;
-            }
-            return errors;
+          validate={(v) => validator(v, t)}
+          onSubmit={(values, { setSubmitting }) => {
+            login(values);
+            setSubmitting(false);
           }}
         >
-          {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-            <form noValidate>
+          {({ values, errors, touched, handleChange, validateForm, submitForm, isSubmitting }) => (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                submitForm(e);
+              }}
+            >
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -37,8 +41,9 @@ const Login = (props) => {
                 fullWidth
                 id="email"
                 label={t("form.email")}
+                error={errors.email && touched.email}
+                helperText={errors.email && touched.email ? `${t("form.emailError")}` : ""}
                 onChange={handleChange}
-                onBlur={handleBlur}
                 value={values.email}
               />
               <TextField
@@ -50,15 +55,14 @@ const Login = (props) => {
                 type="password"
                 id="password"
                 onChange={handleChange}
-                onBlur={handleBlur}
                 value={values.password}
               />
               <Button
                 type="submit"
-                onClick={handleSubmit}
                 disabled={isSubmitting}
                 variant="contained"
                 color="primary"
+                onClick={() => validateForm()}
               >
                 {t("form.button")}
               </Button>

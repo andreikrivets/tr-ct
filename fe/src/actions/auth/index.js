@@ -34,7 +34,28 @@ export const register = (data) => {
   };
 };
 
-export const login = () => ({
-  type: types.USER_LOGIN,
-  // payload: current,
+const loginStarted = () => ({
+  type: types.USER_LOGIN_STARTED,
 });
+
+const loginSuccess = (status) => ({
+  type: types.USER_LOGIN_SUCCESS,
+  payload: status,
+});
+
+const loginFailure = (e) => ({
+  type: types.USER_LOGIN_FAILURE,
+  payload: e,
+});
+
+export const login = (data) => {
+  return async (dispatch) => {
+    dispatch(loginStarted());
+    try {
+      const result = await httpRequest("/api/auth/login", "POST", data);
+      dispatch(loginSuccess(result));
+    } catch (e) {
+      dispatch(loginFailure(e));
+    }
+  };
+};

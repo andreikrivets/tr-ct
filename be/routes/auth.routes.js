@@ -5,12 +5,18 @@ const { check, validationResult } = require('express-validator')
 
 const router = Router()
 
-router.get(
+router.post(
     '/auth/login',
     [],
     async(req, res) => {
-      console.log('get api/auth/login')
-      try {} catch (e) {}
+      try {
+        console.log(req.body)
+        setTimeout(() => {
+          res.status(201).json({ message: 'login done'})
+        }, 2000);
+      } catch (e) {
+        res.status(500).json({ message: e.message })
+      }
 })
 
 
