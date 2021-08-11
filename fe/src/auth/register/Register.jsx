@@ -11,88 +11,98 @@ import {
 import { withTranslation } from "react-i18next";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Formik } from "formik";
+import Skeleton from "react-loading-skeleton";
+
+import validator from "./validators";
 
 const Register = (props) => {
-  const { t } = props;
+  const { t, register, isLoading } = props;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div>
         <Avatar>
-          <LockOutlinedIcon />
+          {isLoading ? <Skeleton circle height={50} width={50} /> : <LockOutlinedIcon />}
         </Avatar>
         <Typography component="h1" variant="h5">
-          {t("form.header")}
+          {isLoading ? <Skeleton /> : t("form.header")}
         </Typography>
         <Formik
           initialValues={{ email: "", password: "" }}
-          validate={(values) => {
-            const errors = {};
-            if (!values.email) {
-              errors.email = "Required";
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-              errors.email = `${t("form.email-error")}`;
-            }
-            return errors;
+          validate={(v) => validator(v, t)}
+          onSubmit={(values, { setSubmitting }) => {
+            register(values);
+            setSubmitting(false);
           }}
         >
-          {({ handleSubmit, isSubmitting }) => (
-            <form noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="fname"
-                    name="firstName"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label={t("form.firstName")}
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label={t("form.lastName")}
-                    autoComplete="lname"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label={t("form.email")}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label={t("form.pw")}
-                    type="password"
-                    id="password"
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                variant="contained"
-                color="primary"
+          {({ handleChange, touched, submitForm, errors, isSubmitting, validateForm }) => {
+            return (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  submitForm(e);
+                }}
               >
-                {t("form.button")}
-              </Button>
-              <Grid container justifyContent="flex-end" />
-            </form>
-          )}
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="firstName"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="firstName"
+                      label={t("form.firstName")}
+                      autoFocus
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="lastName"
+                      label={t("form.lastName")}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      error={errors.email && touched.email}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label={t("form.email")}
+                      onChange={handleChange}
+                      helperText={errors.email && touched.email ? errors.email : ""}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label={t("form.pw")}
+                      type="password"
+                      id="password"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  onClick={() => validateForm()}
+                  disabled={isSubmitting}
+                  variant="contained"
+                  color="primary"
+                >
+                  {t("form.button")}
+                </Button>
+                <Grid container justifyContent="flex-end" />
+              </form>
+            );
+          }}
         </Formik>
       </div>
     </Container>

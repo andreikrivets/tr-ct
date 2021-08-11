@@ -6,7 +6,7 @@
       "pw": "пароль",
       "email": "имейл",
       "button": "войти",
-      "email-error": "ошибка в имейле"
+      "emailError": "ошибка в имейле"
     }
   },
   "register": {
