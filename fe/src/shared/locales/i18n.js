@@ -9,10 +9,14 @@ i18n.use(initReactI18next).init({
     en: {
       login: en.login,
       register: en.register,
+      collection: en.collection,
+      editor: en.editor,
     },
     ru: {
       login: ru.login,
       register: ru.register,
+      collection: ru.collection,
+      editor: ru.editor,
     },
   },
   fallbackLng: "en",

@@ -6,7 +6,8 @@
       "pw": "password",
       "email": "email",
       "button": "login",
-      "emailError": "invalid email"
+      "emailError": "invalid email",
+      "emailRequired": "email is required"
     }
   },
   "register": {
@@ -19,5 +20,40 @@
       "button": "sign up",
       "emailError": "invalid email"
     }
+  },
+  "collection": {
+    "header": "create collection",
+    "form": {
+      "title": "collection name",
+      "description": "description",
+      "theme": "theme",
+      "img": "upload image",
+      "button": "save"
+    },
+    "categories": {
+      "placeholder": "category",
+      "postcards": "post cards",
+      "stamps": "stamps",
+      "envelopes": "envelopes"
+    },
+    "fields": {
+      "model": "you can add up to three cols of each type:",
+      "header1": "columns",
+      "add": "add column",
+      "id": "id",
+      "name": "title",
+      "tags": "tags",
+      "text": "text",
+      "line": "line",
+      "date": "date",
+      "boolean": "checkbox",
+      "ph": "column name",
+      "button": "add"
+    }
+  },
+  "editor": {
+    "write": "write",
+    "preview": "preview",
+    "descr": "description"
   }
 }
