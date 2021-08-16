@@ -16,15 +16,18 @@ import QueueOutlinedIcon from "@material-ui/icons/QueueOutlined";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-import Dropzone from "./Dropzone";
-import Editor from "./Editor";
+import Dropzone from "./components/dropzone/Dropzone";
+import Editor from "./components/Editor";
 import Selector from "./components/Select";
 import CollectionModel from "./components/collectionModel/CollectionModel";
+import submitFile from "./api/submitFile";
+import submitCollectionForm from "./api/submitCollectionForm";
 
 const CreateCollection = (props) => {
   const { t } = props;
   const [additionalTags, setAdditionalTags] = useState({});
   const [additionalFields, setAdditionalFields] = useState({ image: false });
+  const [file, setFile] = useState({});
 
   return (
     <Container component="main" maxWidth="xl">
@@ -36,8 +39,18 @@ const CreateCollection = (props) => {
       </Typography>
       <Formik
         initialValues={{ title: "", description: "", category: "" }}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values, additionalTags);
+        onSubmit={async (values, { setSubmitting }) => {
+          if (additionalFields.image && file) {
+            const imagePostStatus = await submitFile(file);
+            if (imagePostStatus.ok) {
+              const json = await imagePostStatus.json();
+              const imageUrl = json.url;
+              submitCollectionForm({ values, additionalTags, imageUrl });
+            } else throw new Error("failed");
+          } else {
+            submitCollectionForm({ values, additionalTags });
+          }
+
           setSubmitting(false);
         }}
       >
@@ -74,7 +87,7 @@ const CreateCollection = (props) => {
                   {additionalFields.image ? <RemoveIcon /> : <AddIcon />}
                 </IconButton>
               </Tooltip>
-              {additionalFields.image ? <Dropzone /> : null}
+              {additionalFields.image ? <Dropzone setFile={setFile} /> : null}
               <Editor value={values.description} setFieldValue={setFieldValue} />
               <Divider style={{ margin: "20px" }} />
               <Typography variant="caption">{t("fields.model")}</Typography>
