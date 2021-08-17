@@ -1,5 +1,10 @@
 {
   "test": "это не тест",
+  "navbar": {
+    "search": "поиск...",
+    "profile": "профиль",
+    "collections": "коллекции"
+  },
   "login": {
     "form": {
       "header": "войти",
@@ -28,6 +33,9 @@
       "description": "описание",
       "theme": "тема",
       "img": "загрузить изображение",
+      "imgUploadStarted": "ok",
+      "imgUploadFinished": "загружено",
+      "imgUploadError": "ошибка загрузки",
       "button": "сохранить"
     },
     "categories": {

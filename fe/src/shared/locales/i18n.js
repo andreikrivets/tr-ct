@@ -7,12 +7,14 @@ import ru from "./ru.json";
 i18n.use(initReactI18next).init({
   resources: {
     en: {
+      navbar: en.navbar,
       login: en.login,
       register: en.register,
       collection: en.collection,
       editor: en.editor,
     },
     ru: {
+      navbar: ru.navbar,
       login: ru.login,
       register: ru.register,
       collection: ru.collection,

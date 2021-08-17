@@ -5,17 +5,17 @@ import i18n from "../shared/locales/i18n";
 const storageName = "config";
 
 const useLang = () => {
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("");
 
   const langChange = (newLang) => {
-    setLang(newLang.value);
+    setLang(newLang);
     localStorage.setItem(
       storageName,
       JSON.stringify({
-        lang: newLang.value,
+        lang: newLang,
       })
     );
-    i18n.changeLanguage(newLang.value);
+    i18n.changeLanguage(newLang);
   };
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const useLang = () => {
     if (data) {
       setLang(data.lang);
       i18n.changeLanguage(data.lang);
-    }
+    } else setLang("en");
   }, []);
   return { langChange, lang };
 };
