@@ -1,3 +1,4 @@
 import CreateCollection from "./create";
+import ViewCollection from "./view";
 
-export default CreateCollection;
+export { CreateCollection, ViewCollection };

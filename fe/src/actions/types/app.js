@@ -1,0 +1,4 @@
+export const OPEN_MODAL = "APP/OPEN_MODAL";
+export const CLOSE_MODAL = "APP/CLOSE_MODAL";
+export const CHANGE_THEME = "APP/CHANGE_THEME";
+export const CHANGE_LANGUAGE = "APP/CHANGE_LANGUAGE";
