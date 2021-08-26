@@ -28,7 +28,7 @@ import { withTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import { Link, useHistory, useParams } from "react-router-dom";
 
-const ProfileCollection = ({ t, data, user }) => {
+const ProfileCollection = ({ t, data, user, handleDelete }) => {
   const { Name, Description, Type, ImageId, id } = data;
   const { userId } = useParams();
   const history = useHistory();
@@ -42,7 +42,10 @@ const ProfileCollection = ({ t, data, user }) => {
       return acc;
     }, {});
   const cut = Description.length > 200 ? `${Description.slice(0, 200)}...` : Description;
-
+  const handleDeleteCollection = () => {
+    setOpen(false);
+    handleDelete(id);
+  };
   return (
     <>
       <TableContainer component={Box}>
@@ -87,7 +90,6 @@ const ProfileCollection = ({ t, data, user }) => {
                       <EditOutlinedIcon />
                     </IconButton>
                   </Tooltip>
-
                   <Tooltip title={t("deleteLabel")}>
                     <IconButton onClick={() => setOpen(true)}>
                       <DeleteForeverOutlinedIcon />
@@ -102,7 +104,7 @@ const ProfileCollection = ({ t, data, user }) => {
       <Dialog onClose={() => setOpen(false)} open={open}>
         <DialogTitle id="simple-dialog-title">{t("confirm")}</DialogTitle>
         <div>
-          <Button style={{ width: "50%" }} color="secondary">
+          <Button style={{ width: "50%" }} color="secondary" onClick={handleDeleteCollection}>
             {t("btn.yes")}
           </Button>
           <Button

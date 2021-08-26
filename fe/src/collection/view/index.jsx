@@ -1,8 +1,7 @@
 import { connect } from "react-redux";
 
 import ViewCollection from "./ViewCollection";
-import { fetchCollection } from "../../actions/collection";
-import { deleteItem } from "../../actions/item";
+import { fetchCollection, deleteItem } from "../../actions/collection";
 import { openModal } from "../../actions/app";
 
 const mapStateToProps = (state) => ({

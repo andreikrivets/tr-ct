@@ -52,11 +52,6 @@ const fetchLastItemSuccess = (data) => ({
   payload: data,
 });
 
-const deleteItemSuccess = (data) => ({
-  type: itemTypes.DELETE_ITEM_SUCCESS,
-  payload: data,
-});
-
 const fetchItemFailure = (error, status) => ({
   type: itemTypes.ITEM_FETCH_FAILURE,
   payload: { message: error, status },
@@ -96,21 +91,4 @@ const fetchLastItems = () => {
   };
 };
 
-const deleteItem = (id) => {
-  return async (dispatch) => {
-    dispatch(fetchItemStart());
-    try {
-      const result = await httpRequest(`/api/item/${id}`, "DELETE");
-      const json = await result.json();
-      if (result.ok) {
-        dispatch(deleteItemSuccess());
-      } else {
-        dispatch(fetchItemFailure(json.message, result.status));
-      }
-    } catch (e) {
-      dispatch(fetchItemFailure(e));
-    }
-  };
-};
-
-export { sendItem, getItem, fetchLastItems, deleteItem };
+export { sendItem, getItem, fetchLastItems };

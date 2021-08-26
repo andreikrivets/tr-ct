@@ -17,7 +17,16 @@ import { CreateCollection } from "../collection";
 import Collection from "./Collection";
 
 const Profile = (props) => {
-  const { t, getProfileData, isLoading, profile, user, openModalWindow, collections } = props;
+  const {
+    t,
+    getProfileData,
+    isLoading,
+    profile,
+    user,
+    openModalWindow,
+    collections,
+    deleteProfileCollection,
+  } = props;
   const { userId } = useParams();
   useEffect(() => {
     getProfileData(userId);
@@ -31,6 +40,7 @@ const Profile = (props) => {
         <CircularProgress color="secondary" />
       </div>
     );
+  const handleDelete = (delId) => deleteProfileCollection(delId);
   return (
     <Paper style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Avatar style={{ height: "100px", width: "100px" }}>
@@ -44,7 +54,9 @@ const Profile = (props) => {
       <Typography variant="h4">{`${email}`}</Typography>
       <Typography variant="caption">{`${t("memberSince")} ${date}`}</Typography>
       {collections.length ? (
-        collections.map((collection) => <Collection user={user} key={uniqid()} data={collection} />)
+        collections.map((collection) => (
+          <Collection user={user} key={uniqid()} data={collection} handleDelete={handleDelete} />
+        ))
       ) : (
         <Typography>{t("notExist")}</Typography>
       )}

@@ -74,4 +74,20 @@ router.get('/:id',
     res.status(500).json(e)
   }
 })
+
+router.delete(
+  '/:id',
+  auth,
+  async(req, res) => {
+    try {
+      const { id } = req.params
+      console.log(id)
+      await Collection.destroy({ where: { id: id } })
+      res.status(200).json({ message: "deleted" })
+    } catch (e) {
+      res.status(500).json({ message: e.message })
+    }
+  }
+)
+
 module.exports = router

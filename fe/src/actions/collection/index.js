@@ -53,6 +53,11 @@ const fetchCollectionFailure = (error, status) => ({
   payload: { message: error, status },
 });
 
+const deleteItemSuccess = (id) => ({
+  type: collectionTypes.DELETE_ITEM_SUCCESS,
+  payload: id,
+});
+
 const fetchCollection = (id) => {
   return async (dispatch) => {
     dispatch(fetchCollectionStart());
@@ -70,4 +75,21 @@ const fetchCollection = (id) => {
   };
 };
 
-export { submitCollection, fetchCollection };
+const deleteItem = (id) => {
+  return async (dispatch) => {
+    dispatch(fetchCollectionStart());
+    try {
+      const result = await httpRequest(`/api/item/${id}`, "DELETE");
+      const json = await result.json();
+      if (result.ok) {
+        dispatch(deleteItemSuccess(id));
+      } else {
+        dispatch(fetchCollectionFailure(json.message, result.status));
+      }
+    } catch (e) {
+      dispatch(fetchCollectionFailure(e));
+    }
+  };
+};
+
+export { submitCollection, fetchCollection, deleteItem };

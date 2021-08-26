@@ -86,16 +86,8 @@ router.delete(
     try {
       const { id } = req.params
       console.log(id)
-      // Item.belongsToMany(Tag,  { through: ItemTag })
-      // Tag.belongsToMany(Item,  { through: ItemTag })
-      // const item = await Item.findOne({ 
-      //   where: { id: id },
-      //   include: {
-      //     model: Tag,
-      //   }
-      // })
-      // // const { dataValues } = item
-      res.status(200).json()
+      await Item.destroy({ where: { id: id } })
+      res.status(200).json({ message: "deleted" })
     } catch (e) {
       res.status(500).json({ message: e.message })
     }

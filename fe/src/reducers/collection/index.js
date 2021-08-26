@@ -50,6 +50,13 @@ const collection = (state = initialState, action) => {
         loading: false,
         error: { message: action.payload.message, status: action.payload.status },
       };
+    case collectionTypes.DELETE_ITEM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        items: state.items.filter((element) => element.id !== action.payload),
+      };
     default:
       return state;
   }

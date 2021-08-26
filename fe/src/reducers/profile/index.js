@@ -34,6 +34,13 @@ const profile = (state = initialState, action) => {
         loading: false,
         error: { message: action.payload.message, status: action.payload.status },
       };
+    case profileTypes.COLLECTION_DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        collections: state.collections.filter((collection) => collection.id !== action.payload),
+      };
     default:
       return state;
   }

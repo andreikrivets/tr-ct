@@ -52,12 +52,6 @@ const item = (state = initialState, action) => {
         loading: false,
         error: { message: action.payload.message, status: action.payload.status },
       };
-    case itemTypes.DELETE_ITEM_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-      };
     default:
       return state;
   }
