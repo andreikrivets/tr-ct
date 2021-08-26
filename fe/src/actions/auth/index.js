@@ -4,8 +4,7 @@ const httpRequest = async (url, method = "GET", data) => {
   const body = data ? JSON.stringify(data) : "";
   const headers = { "Content-Type": "application/json" };
   const res = await fetch(url, { method, headers, body });
-  const json = await res.json();
-  return json;
+  return res;
 };
 
 const registerStarted = () => ({
@@ -17,9 +16,9 @@ const registerSuccess = (status) => ({
   payload: status,
 });
 
-const registerFailure = (e) => ({
+const registerFailure = (error, status) => ({
   type: types.USER_REGISTER_FAILURE,
-  payload: e,
+  payload: { message: error, status },
 });
 
 export const register = (data) => {
@@ -27,7 +26,12 @@ export const register = (data) => {
     dispatch(registerStarted());
     try {
       const result = await httpRequest("/api/auth/register", "POST", data);
-      dispatch(registerSuccess(result));
+      const json = await result.json();
+      if (result.ok) {
+        dispatch(registerSuccess(result.status));
+      } else {
+        dispatch(registerFailure(json.message, result.status));
+      }
     } catch (e) {
       dispatch(registerFailure(e));
     }
@@ -38,14 +42,18 @@ const loginStarted = () => ({
   type: types.USER_LOGIN_STARTED,
 });
 
-const loginSuccess = (status) => ({
+const loginSuccess = (user) => ({
   type: types.USER_LOGIN_SUCCESS,
-  payload: status,
+  payload: user,
 });
 
-const loginFailure = (e) => ({
+const loginFailure = (error, status) => ({
   type: types.USER_LOGIN_FAILURE,
-  payload: e,
+  payload: { message: error, status },
+});
+
+const userLogout = () => ({
+  type: types.USER_LOGOUT,
 });
 
 export const login = (data) => {
@@ -53,9 +61,22 @@ export const login = (data) => {
     dispatch(loginStarted());
     try {
       const result = await httpRequest("/api/auth/login", "POST", data);
-      dispatch(loginSuccess(result));
+      const json = await result.json();
+      if (result.ok) {
+        dispatch(loginSuccess(json));
+        localStorage.setItem("user", JSON.stringify(json));
+      } else {
+        dispatch(loginFailure(json.message, result.status));
+      }
     } catch (e) {
       dispatch(loginFailure(e));
     }
+  };
+};
+
+export const logOut = () => {
+  return async (dispatch) => {
+    dispatch(userLogout());
+    localStorage.removeItem("user");
   };
 };

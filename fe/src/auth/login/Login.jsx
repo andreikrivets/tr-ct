@@ -8,9 +8,10 @@ import Skeleton from "react-loading-skeleton";
 import validator from "./validator";
 
 const Login = (props) => {
-  const { t, login, isLoading } = props;
+  const { t, login, isLoading, closeModalWindow } = props;
+
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ background: "white" }}>
       <CssBaseline />
       <div>
         <Avatar>
@@ -22,8 +23,10 @@ const Login = (props) => {
         <Formik
           initialValues={{ email: "", password: "" }}
           validate={(v) => validator(v, t)}
-          onSubmit={(values, { setSubmitting }) => {
-            login(values);
+          onSubmit={async (values, { setSubmitting }) => {
+            login(values).then(() => {
+              closeModalWindow();
+            });
             setSubmitting(false);
           }}
         >

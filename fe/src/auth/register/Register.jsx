@@ -18,7 +18,7 @@ import validator from "./validators";
 const Register = (props) => {
   const { t, register, isLoading } = props;
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div>
         <Avatar>

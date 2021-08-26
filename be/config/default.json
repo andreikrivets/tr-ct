@@ -1,0 +1,9 @@
+{
+  "port": 3003,
+  "dbUsername": "yyBep3oMpC",
+  "dbName": "yyBep3oMpC",
+  "dbPassword": "BCNDhQIL1y",
+  "dbServer": "remotemysql.com",
+  "dbPort": 3306,
+  "jwtSecret": "itsnotakey"
+}
