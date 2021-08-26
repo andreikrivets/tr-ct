@@ -1,0 +1,21 @@
+{
+  "name": "mrktplc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./be/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server:install": "npm install --prefix ./be",
+    "server:start": "npm run server --prefix ./be"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreikrivets/tr-ct.git"
+  },
+  "author": "andrei krivets <andreikrivets@protonmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreikrivets/tr-ct/issues"
+  },
+  "homepage": "https://github.com/andreikrivets/tr-ct#readme"
+}
