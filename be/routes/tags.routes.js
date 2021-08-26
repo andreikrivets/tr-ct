@@ -3,7 +3,7 @@ const { Router } = require('express')
 
 const { Tag } = require('../models/tags')
 const { Item } = require('../models/item')
-const { ItemTags } = require('../models/itemtags')
+const { ItemTags } = require('../models/itemTags')
 
 const router = Router()
 
