@@ -3,7 +3,10 @@
   "navbar": {
     "search": "поиск...",
     "profile": "профиль",
-    "collections": "коллекции"
+    "collections": "коллекции",
+    "signin": "войти",
+    "signup": "зарегистрироваться",
+    "signout": "выйти"
   },
   "login": {
     "form": {
@@ -36,7 +39,11 @@
       "imgUploadStarted": "ok",
       "imgUploadFinished": "загружено",
       "imgUploadError": "ошибка загрузки",
-      "button": "сохранить"
+      "button": "сохранить",
+      "created": {
+        "title": "создано!",
+        "btn": "закрыть"
+      }
     },
     "categories": {
       "placeholder": "категория",
@@ -56,12 +63,45 @@
       "date": "дата",
       "boolean": "переключатель",
       "ph": "имя колонки",
-      "button": "добавить"
+      "btn": "добавить",
+      "items": {
+        "itemName": "название айтема",
+        "tags": "тэги",
+        "btn": {
+          "create": "создать айтем"
+        },
+      "h1s": "создать айтем в коллекцию",
+      "h1e": ""
+      }
     }
   },
   "editor": {
     "write": "написать",
     "preview": "просмотр",
     "descr": "описание"
+  },
+  "profile": {
+    "memberSince": "пользователь с",
+    "admin": "админ",
+    "user": "пользователь",
+    "btn": {
+      "createCollection": "создать коллекцию",
+      "yes": "да",
+      "no": "нет"
+    },
+    "notExist": "у этого профиля нет коллекций",
+    "confirm": "вы уверены?",
+    "editLabel": "редактировать",
+    "deleteLabel": "удалить"
+  },
+  "main": {
+    "lastItems": "последние элементы",
+    "tableHeaders": {
+      "id": "айди",
+      "item": "айтем",
+      "tags": "тэги",
+      "collection": "коллекция",
+      "owner": "владелец"
+    }
   }
 }

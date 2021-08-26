@@ -3,7 +3,10 @@
   "navbar": {
     "search": "search...",
     "profile": "profile",
-    "collections": "collections"
+    "collections": "collections",
+    "signin": "sign in",
+    "signup": "sign up",
+    "signout": "sign out"
   },
   "login": {
     "form": {
@@ -36,7 +39,11 @@
       "imgUploadStarted": "ok",
       "imgUploadFinished": "uploaded",
       "imgUploadError": "upload error",
-      "button": "save"
+      "button": "save",
+      "created": {
+        "title": "created!",
+        "btn": "close"
+      }
     },
     "categories": {
       "placeholder": "category",
@@ -56,12 +63,45 @@
       "date": "date",
       "boolean": "checkbox",
       "ph": "column name",
-      "button": "add"
+      "btn": "add"
     }
+  },
+  "items": {
+    "itemName": "item name",
+    "tags": "tags",
+    "btn": {
+      "create": "create item"
+    },
+    "h1s": "create item into",
+    "h1e": "collection"
   },
   "editor": {
     "write": "write",
     "preview": "preview",
     "descr": "description"
+  },
+  "profile": {
+    "memberSince": "member since",
+    "admin": "admin",
+    "user": "user",
+    "btn": {
+      "createCollection": "create collection",
+      "yes": "yes",
+      "no": "no"
+    },
+    "notExist": "this profile have no collections",
+    "confirm": "are you shure?",
+    "editLabel": "edit",
+    "deleteLabel": "delete"
+  },
+  "main": {
+    "lastItem": "last elements",
+    "tableHeaders": {
+      "id": "id",
+      "item": "item",
+      "tags": "tags",
+      "collection": "collection",
+      "owner": "owner"
+    }
   }
 }
