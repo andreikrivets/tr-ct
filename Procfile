@@ -1,2 +1,2 @@
-depts: npm run server:install
+depts: npm install
 web: npm run start
