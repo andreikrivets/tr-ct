@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
 import DarkModeToggle from "react-dark-mode-toggle";
 import {
   AppBar,
-  Switch as SwitchComponent,
-  Link,
+  Avatar,
   Toolbar,
   Select,
   InputBase,
@@ -13,60 +11,156 @@ import {
   MenuItem,
   IconButton,
   Typography,
+  Divider,
 } from "@material-ui/core/";
+import { useHistory } from "react-router-dom";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import PermIdentityOutlinedIcon from "@material-ui/icons/PermIdentityOutlined";
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import SearchIcon from "@material-ui/icons/Search";
+import { connect } from "react-redux";
 
-import useLang from "../../../hooks/lang.hook";
+import { openModal, closeModal, changeTheme, changeLanguage } from "../../../actions/app";
+import SearchResults from "./SearchResults";
+
+import { logOut } from "../../../actions/auth";
+import searchItem from "../../../actions/search";
+import Login from "../../../auth/login";
+import Register from "../../../auth/register";
 
 const Navbar = (props) => {
-  const { t, themeSwitch, checked } = props;
-  const { lang, langChange } = useLang();
+  const {
+    t,
+    loggedIn,
+    onLogOut,
+    userId,
+    changeLang,
+    openModalWindow,
+    closeModalWindow,
+    changeColorTheme,
+    theme,
+    language,
+    sendSearch,
+  } = props;
+  const [lang, setLang] = useState(language);
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchVal, setSearchVal] = useState("");
   const open = Boolean(anchorEl);
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    onLogOut();
+    setAnchorEl(null);
+    closeModalWindow();
+  };
+
+  const handleLangChange = (e) => {
+    setLang(e.target.value);
+    changeLang(e.target.value);
+  };
+
+  const handleOpenSearchResults = async () => {
+    if (!searchVal && !searchVal.trim()) return;
+    sendSearch(searchVal.trim());
+    openModalWindow(<SearchResults q={searchVal} />);
+  };
+
+  const handleOpenProfile = () => {
+    setAnchorEl(null);
+    history.push(`/user/${userId}`);
   };
 
   return (
     <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6">MRKT</Typography>
+      <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h4" style={{ cursor: "pointer" }} onClick={() => history.push("/")}>
+          MRKT
+        </Typography>
+
         <div style={{ display: "flex" }}>
-          <div>
+          <InputBase
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+            placeholder={`${t("search")}`}
+            inputProps={{ "aria-label": "search", maxLength: 20 }}
+          />
+          <IconButton onClick={handleOpenSearchResults}>
             <SearchIcon />
-          </div>
-          <InputBase placeholder={`${t("search")}`} inputProps={{ "aria-label": "search" }} />
+          </IconButton>
         </div>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={lang}
-          onChange={(e) => langChange(e.target.value)}
+          onChange={handleLangChange}
         >
           <MenuItem value="en">en</MenuItem>
           <MenuItem value="ru">ru</MenuItem>
         </Select>
+        <DarkModeToggle checked={theme} onChange={changeColorTheme} size={50} speed={5} />
         <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenu}>
-          <AccountCircle />
+          <Avatar>
+            <AccountCircle />
+          </Avatar>
         </IconButton>
-        <DarkModeToggle checked={checked} onChange={themeSwitch} size={50} speed={5} />
-        <Menu id="menu-appbar" anchorEl={anchorEl} keepMounted open={open} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>
-            <Link href="/profile">{t("profile")}</Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Link href="/collections">{t("collections")}</Link>
-          </MenuItem>
-        </Menu>
+        <>
+          {loggedIn ? (
+            <Menu id="menu-appbar" anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
+              <MenuItem onClick={handleOpenProfile}>
+                <ListItemIcon>
+                  <PermIdentityOutlinedIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary={t("profile")} />
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <ExitToAppOutlinedIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary={t("signout")} />
+              </MenuItem>
+            </Menu>
+          ) : (
+            <Menu id="menu-appbar" anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
+              <MenuItem onClick={() => openModalWindow(<Login />)}>{t("signin")}</MenuItem>
+              <MenuItem onClick={() => openModalWindow(<Register />)}>{t("signup")}</MenuItem>
+            </Menu>
+          )}
+        </>
       </Toolbar>
     </AppBar>
   );
 };
 
-export default withTranslation("navbar")(Navbar);
+const mapStateToProps = (state) => {
+  const { auth, app, profile } = state;
+  return {
+    loggedIn: auth.loggedIn,
+    userId: auth.user.userId,
+    modal: app.modal,
+    theme: app.theme,
+    language: app.lang,
+    profileData: profile.data,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onLogOut: () => dispatch(logOut()),
+  openModalWindow: (component) => dispatch(openModal(component)),
+  closeModalWindow: () => dispatch(closeModal()),
+  changeColorTheme: () => dispatch(changeTheme()),
+  changeLang: (newLang) => dispatch(changeLanguage(newLang)),
+  sendSearch: (query) => dispatch(searchItem(query)),
+});
+
+const ConnectedNavbar = connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default withTranslation("navbar")(ConnectedNavbar);
