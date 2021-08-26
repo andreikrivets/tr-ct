@@ -1,8 +1,6 @@
-import env from "react-dotenv";
-
 const submitFile = async (file) => {
   const url = "https://upload.imagekit.io/api/v1/files/upload";
-  const publicKey = env.IK_KEY_PUBLIC;
+  const publicKey = process.env.REACT_APP_IK_KEY_PUBLIC;
   const authEndpoint = "/api/ik/auth";
 
   const params = await fetch(authEndpoint);
@@ -16,6 +14,7 @@ const submitFile = async (file) => {
   formData.append("signature", signature);
   formData.append("token", token);
   formData.append("publicKey", publicKey);
+  formData.append("folder", "collections");
 
   const post = await fetch(url, {
     method: "POST",

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
-import { TextField, Box, Chip, Select, Typography, IconButton } from "@material-ui/core";
+import { TextField, Box, Chip, Select, Typography, IconButton, Tooltip } from "@material-ui/core";
 
 import { useTheme } from "@material-ui/core/styles";
 
@@ -84,11 +84,14 @@ const CollectionModel = ({ t, additionalTags, setAdditionalTags }) => {
           id="standard-basic"
           label={`${t("fields.ph")}`}
           value={colName}
+          inputProps={{ maxLength: 20 }}
           onChange={(e) => setColName(e.target.value)}
         />
-        <IconButton onClick={handleSaveTag} color="secondary">
-          <SaveIcon />
-        </IconButton>
+        <Tooltip title={`${t("fields.btn")}`}>
+          <IconButton onClick={handleSaveTag} color="secondary">
+            <SaveIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
     </>
   );
