@@ -17,6 +17,7 @@ import ViewItem from "./item/view";
 import HomePage from "./home";
 
 import "./App.css";
+import TagSearch from "./tagSearch";
 
 const App = (props) => {
   const { modal, component, closeModalWindow, theme, lang } = props;
@@ -57,6 +58,9 @@ const App = (props) => {
               </Route>
               <Route path="/item/:itemId" exact>
                 <ViewItem />
+              </Route>
+              <Route path="/tag/:tagId" exact>
+                <TagSearch />
               </Route>
               <Redirect to="/" />
             </Switch>
