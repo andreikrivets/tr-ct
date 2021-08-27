@@ -11,14 +11,16 @@ import {
   MenuItem,
   IconButton,
   Typography,
+  ListItemIcon,
+  ListItemText,
   Divider,
 } from "@material-ui/core/";
 import { useHistory } from "react-router-dom";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import PermIdentityOutlinedIcon from "@material-ui/icons/PermIdentityOutlined";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
+import MeetingRoomOutlinedIcon from "@material-ui/icons/MeetingRoomOutlined";
+import InputIcon from "@material-ui/icons/Input";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
 
@@ -27,8 +29,7 @@ import SearchResults from "./SearchResults";
 
 import { logOut } from "../../../actions/auth";
 import searchItem from "../../../actions/search";
-import Login from "../../../auth/login";
-import Register from "../../../auth/register";
+import { Login, Register } from "../../../auth";
 
 const Navbar = (props) => {
   const {
@@ -131,8 +132,18 @@ const Navbar = (props) => {
             </Menu>
           ) : (
             <Menu id="menu-appbar" anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
-              <MenuItem onClick={() => openModalWindow(<Login />)}>{t("signin")}</MenuItem>
-              <MenuItem onClick={() => openModalWindow(<Register />)}>{t("signup")}</MenuItem>
+              <MenuItem onClick={() => openModalWindow(<Login />)}>
+                <ListItemIcon>
+                  <InputIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary={t("signin")} />
+              </MenuItem>
+              <MenuItem onClick={() => openModalWindow(<Register />)}>
+                <ListItemIcon>
+                  <MeetingRoomOutlinedIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary={t("signup")} />
+              </MenuItem>
             </Menu>
           )}
         </>

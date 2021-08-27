@@ -11,68 +11,66 @@ const Login = (props) => {
   const { t, login, isLoading, closeModalWindow } = props;
 
   return (
-    <Container component="main" maxWidth="xs" style={{ background: "white" }}>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div>
+      <div className="avatar-wrapper">
         <Avatar>
           {isLoading ? <Skeleton circle height={50} width={50} /> : <LockOutlinedIcon />}
         </Avatar>
-        <Typography component="h1" variant="h5">
-          {isLoading ? <Skeleton /> : t("form.header")}
-        </Typography>
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validate={(v) => validator(v, t)}
-          onSubmit={async (values, { setSubmitting }) => {
-            login(values).then(() => {
-              closeModalWindow();
-            });
-            setSubmitting(false);
-          }}
-        >
-          {({ values, errors, touched, handleChange, validateForm, submitForm, isSubmitting }) => (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                submitForm(e);
-              }}
-            >
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label={t("form.email")}
-                error={errors.email && touched.email}
-                helperText={errors.email && touched.email ? `${t("form.emailError")}` : ""}
-                onChange={handleChange}
-                value={values.email}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label={t("form.pw")}
-                type="password"
-                id="password"
-                onChange={handleChange}
-                value={values.password}
-              />
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                variant="contained"
-                color="primary"
-                onClick={() => validateForm()}
-              >
-                {t("form.button")}
-              </Button>
-            </form>
-          )}
-        </Formik>
       </div>
+      <Typography variant="h5">{isLoading ? <Skeleton /> : t("form.header")}</Typography>
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validate={(v) => validator(v, t)}
+        onSubmit={async (values, { setSubmitting }) => {
+          login(values).then(() => {
+            closeModalWindow();
+          });
+          setSubmitting(false);
+        }}
+      >
+        {({ values, errors, touched, handleChange, validateForm, submitForm, isSubmitting }) => (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              submitForm(e);
+            }}
+          >
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label={t("form.email")}
+              error={errors.email && touched.email}
+              helperText={errors.email && touched.email ? `${t("form.emailError")}` : ""}
+              onChange={handleChange}
+              value={values.email}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label={t("form.pw")}
+              type="password"
+              id="password"
+              onChange={handleChange}
+              value={values.password}
+            />
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              variant="contained"
+              color="primary"
+              onClick={() => validateForm()}
+            >
+              {t("form.button")}
+            </Button>
+          </form>
+        )}
+      </Formik>
     </Container>
   );
 };

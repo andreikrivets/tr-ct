@@ -21,9 +21,11 @@ const Register = (props) => {
     <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div>
-        <Avatar>
-          {isLoading ? <Skeleton circle height={50} width={50} /> : <LockOutlinedIcon />}
-        </Avatar>
+        <div className="avatar-wrapper">
+          <Avatar>
+            {isLoading ? <Skeleton circle height={50} width={50} /> : <LockOutlinedIcon />}
+          </Avatar>
+        </div>
         <Typography component="h1" variant="h5">
           {isLoading ? <Skeleton /> : t("form.header")}
         </Typography>
