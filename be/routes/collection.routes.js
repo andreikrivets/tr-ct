@@ -1,7 +1,4 @@
 const { Router } = require('express')
-const fs = require('fs');
-const config = require('config')
-const jwt = require('jsonwebtoken')
 const auth = require('../utils/auth')
 
 const { Collection } = require('../models/collection')
@@ -19,11 +16,11 @@ router.post(
   async(req, res) => {
     const currentTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     try {
-      const { token, userId } = JSON.parse(req.headers["x-access-token"])
+      const { userId } = JSON.parse(req.headers["x-access-token"])
       const { values, additionalTags, imageUrl } = req.body
       const { title, description, category } = values
       const { text, line, boolean, date } = additionalTags
-      const collection =  Collection.build({ 
+      await Collection.build({ 
         Name: title, 
         Description: description,
         OwnerId: userId,
@@ -43,8 +40,6 @@ router.post(
         addDate2: date ? date[1] || '' : '',
         addDate3: date ? date[2] || '' : '',
       })
-      console.log(collection)
-      await collection.save()
       res.status(200).json({ message: 'created'})
     } catch (e) {
       res.status(500).json({ message: e.message })
@@ -83,6 +78,42 @@ router.delete(
       console.log(id)
       await Collection.destroy({ where: { id: id } })
       res.status(200).json({ message: "deleted" })
+    } catch (e) {
+      res.status(500).json({ message: e.message })
+    }
+  }
+)
+
+router.put(
+  '/',
+  auth,
+  async(req, res) => {
+    try {
+      const { values, additionalTags, imageUrl, collectionId } = req.body
+      const { title, description, category } = values
+      const { text, line, boolean, date } = additionalTags
+      console.log(collectionId)
+
+      await Collection.update({ 
+        Name: title, 
+        Description: description,
+        Type: category, 
+        ImageId: imageUrl || '',
+        addText1: text ? text[0] || '' : '',
+        addText2: text ? text[1] || '' : '',
+        addText3: text ? text[2] || '' : '',
+        addLine1: line ? line[0] || '' : '',
+        addLine2: line ? line[1] || '' : '',
+        addLine3: line ? line[2] || '' : '',
+        addBool1: boolean ? boolean[0] || '' : '',
+        addBool2: boolean ? boolean[1] || '' : '',
+        addBool3: boolean ? boolean[2] || '' : '',
+        addDate1: date ? date[0] || '' : '',
+        addDate2: date ? date[1] || '' : '',
+        addDate3: date ? date[2] || '' : '',
+      }, { where: { id: collectionId }})
+
+      res.status(200).json({ message: "updated" })
     } catch (e) {
       res.status(500).json({ message: e.message })
     }

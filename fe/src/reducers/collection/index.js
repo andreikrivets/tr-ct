@@ -10,27 +10,21 @@ const initialState = {
 
 const collection = (state = initialState, action) => {
   switch (action.type) {
-    case collectionTypes.COLLECTION_SUBMIT_START:
-      return {
-        ...state,
-        loading: true,
-      };
     case collectionTypes.COLLECTION_SUBMIT_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
       };
-    case collectionTypes.COLLECTION_SUBMIT_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: { message: action.payload.message, status: action.payload.status },
-      };
     case collectionTypes.COLLECTION_FETCH_START:
       return {
         ...state,
         loading: true,
+      };
+    case collectionTypes.UPDATE_COLLECTION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
       };
     case collectionTypes.COLLECTION_FETCH_SUCCESS:
       return {

@@ -31,6 +31,7 @@
   },
   "collection": {
     "header": "создание коллекции",
+    "editHeader": "редактирование коллекции",
     "form": {
       "title": "имя коллекции",
       "description": "описание",
@@ -40,6 +41,7 @@
       "imgUploadFinished": "загружено",
       "imgUploadError": "ошибка загрузки",
       "button": "сохранить",
+      "editButton": "обновить",
       "created": {
         "title": "создано!",
         "btn": "закрыть"

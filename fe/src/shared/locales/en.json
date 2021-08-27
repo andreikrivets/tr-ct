@@ -31,6 +31,7 @@
   },
   "collection": {
     "header": "create collection",
+    "editHeader": "edit collection",
     "form": {
       "title": "collection name",
       "description": "description",
@@ -40,6 +41,7 @@
       "imgUploadFinished": "uploaded",
       "imgUploadError": "upload error",
       "button": "save",
+      "editButton": "update",
       "created": {
         "title": "created!",
         "btn": "close"
