@@ -52,7 +52,6 @@ const ViewCollection = (props) => {
     deleteCollectionItem(deleteId);
     setOpen(false);
   };
-
   const additionalKeys =
     Object.keys(collection).filter((key) => key.startsWith("add") && collection[key]) || [];
   const date = new Date(createdAt).toLocaleDateString();
@@ -76,16 +75,16 @@ const ViewCollection = (props) => {
           variant="outlined"
           onClick={() => openModalWindow(<CreateItem data={collection} />)}
         >
-          {t("btn.createCollection")}
+          {t("items.btn.create")}
         </Button>
       )}
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow style={{ background: `${theme.palette.grey[100]}` }}>
-              <TableCell>id</TableCell>
-              <TableCell>name</TableCell>
-              <TableCell>tags</TableCell>
+              <TableCell>{t("fields.id")}</TableCell>
+              <TableCell>{t("fields.name")}</TableCell>
+              <TableCell>{t("fields.tags")}</TableCell>
               {additionalKeys.map((key) => (
                 <TableCell key={uniqid()}>{collection[key]}</TableCell>
               ))}
@@ -127,4 +126,4 @@ const ViewCollection = (props) => {
   );
 };
 
-export default withTranslation("profile")(ViewCollection);
+export default withTranslation("collection")(ViewCollection);

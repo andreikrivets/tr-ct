@@ -63,17 +63,17 @@
       "date": "date",
       "boolean": "checkbox",
       "ph": "column name",
-      "btn": "add"
-    }
-  },
-  "items": {
-    "itemName": "item name",
-    "tags": "tags",
-    "btn": {
-      "create": "create item"
+      "btn": "add",
+      "h1s": "create item into",
+      "h1e": "collection"
     },
-    "h1s": "create item into",
-    "h1e": "collection"
+    "items": {
+      "itemName": "item name",
+      "tags": "tags",
+      "btn": {
+        "create": "create item"
+      }
+    }
   },
   "editor": {
     "write": "write",
