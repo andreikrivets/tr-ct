@@ -53,13 +53,6 @@ const Profile = (props) => {
       <Chip label={`${type === "user" ? t("user") : t("admin")}`} />
       <Typography variant="h4">{`${email}`}</Typography>
       <Typography variant="caption">{`${t("memberSince")} ${date}`}</Typography>
-      {collections.length ? (
-        collections.map((collection) => (
-          <Collection user={user} key={uniqid()} data={collection} handleDelete={handleDelete} />
-        ))
-      ) : (
-        <Typography>{t("notExist")}</Typography>
-      )}
       {user.userId === +userId && (
         <Button
           variant="outlined"
@@ -68,6 +61,13 @@ const Profile = (props) => {
         >
           {t("btn.createCollection")}
         </Button>
+      )}
+      {collections.length ? (
+        collections.map((collection) => (
+          <Collection user={user} key={uniqid()} data={collection} handleDelete={handleDelete} />
+        ))
+      ) : (
+        <Typography>{t("notExist")}</Typography>
       )}
     </Paper>
   );
