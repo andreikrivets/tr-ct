@@ -27,12 +27,10 @@ import Created from "./components/Created";
 
 const CreateCollection = (props) => {
   const isRoute = useRouteMatch("/edit/collection/:collectionId");
-
   const { t, submitCollectionForm, isLoading, collections } = props;
   const [additionalFields, setAdditionalFields] = useState({ image: false });
   const [file, setFile] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  // const [initialVal, setInitialVal] = useState({});
   let initialVal;
   let additional;
   if (isRoute) {

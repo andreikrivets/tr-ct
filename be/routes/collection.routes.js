@@ -67,7 +67,6 @@ router.get('/:id',
       ],
       include: Tag
     });
-    console.log(id)
     res.status(200).json({ collection, items })
   } catch (e) {
     console.log(e)
