@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { InputBase, IconButton } from "@material-ui/core";
+import { InputBase, IconButton, Paper, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import uniqid from "uniqid";
 import SearchIcon from "@material-ui/icons/Search";
@@ -19,7 +19,7 @@ const SearchResults = ({ t, q, data, isLoading, sendSearch }) => {
   };
 
   return (
-    <div>
+    <Paper>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <InputBase
           value={searchVal}
@@ -32,11 +32,11 @@ const SearchResults = ({ t, q, data, isLoading, sendSearch }) => {
         </IconButton>
       </div>
       {!data.length ? (
-        <p>No results</p>
+        <Typography variant="subtitle1">{t("notfound")}</Typography>
       ) : (
         data.map((result) => <SearchResultsItem key={uniqid()} data={result} q={q} />)
       )}
-    </div>
+    </Paper>
   );
 };
 

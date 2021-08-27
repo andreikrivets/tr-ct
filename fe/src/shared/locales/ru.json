@@ -6,7 +6,8 @@
     "collections": "коллекции",
     "signin": "войти",
     "signup": "зарегистрироваться",
-    "signout": "выйти"
+    "signout": "выйти",
+    "notfound": "не найдено"
   },
   "login": {
     "form": {

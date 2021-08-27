@@ -6,7 +6,8 @@
     "collections": "collections",
     "signin": "sign in",
     "signup": "sign up",
-    "signout": "sign out"
+    "signout": "sign out",
+    "notfound": "not found"
   },
   "login": {
     "form": {
