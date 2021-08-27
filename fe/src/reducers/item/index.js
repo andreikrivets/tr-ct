@@ -11,27 +11,21 @@ const initialState = {
 
 const item = (state = initialState, action) => {
   switch (action.type) {
-    case itemTypes.ITEM_SUBMIT_START:
-      return {
-        ...state,
-        loading: true,
-      };
     case itemTypes.ITEM_SUBMIT_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
       };
-    case itemTypes.ITEM_SUBMIT_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: { message: action.payload.message, status: action.payload.status },
-      };
     case itemTypes.ITEM_FETCH_START:
       return {
         ...state,
         loading: true,
+      };
+    case itemTypes.ITEM_UPDATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
       };
     case itemTypes.ITEM_FETCH_SUCCESS:
       return {

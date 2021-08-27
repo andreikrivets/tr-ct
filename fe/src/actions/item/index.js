@@ -8,35 +8,9 @@ const httpRequest = async (url, method = "GET", data) => {
   return res;
 };
 
-const sendItemStart = () => ({
-  type: itemTypes.ITEM_SUBMIT_START,
-});
-
 const sendItemSuccess = () => ({
   type: itemTypes.ITEM_SUBMIT_SUCCESS,
 });
-
-const sendItemFailure = (error, status) => ({
-  type: itemTypes.ITEM_SUBMIT_FAILURE,
-  payload: { message: error, status },
-});
-
-const sendItem = (data) => {
-  return async (dispatch) => {
-    dispatch(sendItemStart());
-    try {
-      const result = await httpRequest(`/api/item/`, "POST", data);
-      const json = await result.json();
-      if (result.ok) {
-        dispatch(sendItemSuccess(json.info, json.collections));
-      } else {
-        dispatch(sendItemFailure(json.message, result.status));
-      }
-    } catch (e) {
-      dispatch(sendItemFailure(e));
-    }
-  };
-};
 
 const fetchItemStart = () => ({
   type: itemTypes.ITEM_FETCH_START,
@@ -57,6 +31,10 @@ const fetchItemFailure = (error, status) => ({
   payload: { message: error, status },
 });
 
+const updateItemSuccess = () => ({
+  type: itemTypes.ITEM_UPDATE_SUCCESS,
+});
+
 const getItem = (id) => {
   return async (dispatch) => {
     dispatch(fetchItemStart());
@@ -65,6 +43,23 @@ const getItem = (id) => {
       const json = await result.json();
       if (result.ok) {
         dispatch(fetchItemSuccess(json.items));
+      } else {
+        dispatch(fetchItemFailure(json.message, result.status));
+      }
+    } catch (e) {
+      dispatch(fetchItemFailure(e));
+    }
+  };
+};
+
+const sendItem = (data) => {
+  return async (dispatch) => {
+    dispatch(fetchItemStart());
+    try {
+      const result = await httpRequest(`/api/item/`, "POST", data);
+      const json = await result.json();
+      if (result.ok) {
+        dispatch(sendItemSuccess(json.info, json.collections));
       } else {
         dispatch(fetchItemFailure(json.message, result.status));
       }
@@ -91,4 +86,21 @@ const fetchLastItems = () => {
   };
 };
 
-export { sendItem, getItem, fetchLastItems };
+const updateItem = (item) => {
+  return async (dispatch) => {
+    dispatch(fetchItemStart());
+    try {
+      const result = await httpRequest(`/api/item/`, "PUT", item);
+      const json = await result.json();
+      if (result.ok) {
+        dispatch(updateItemSuccess());
+      } else {
+        dispatch(fetchItemFailure(json.message, result.status));
+      }
+    } catch (e) {
+      dispatch(fetchItemFailure(e));
+    }
+  };
+};
+
+export { sendItem, getItem, fetchLastItems, updateItem };

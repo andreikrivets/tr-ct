@@ -13,6 +13,7 @@ import { CreateCollection, ViewCollection } from "./collection";
 import Navbar from "./shared/components/Navbar/Navbar";
 import Profile from "./profile";
 import { closeModal } from "./actions/app";
+import EditItem from "./item/edit";
 import ViewItem from "./item/view";
 import HomePage from "./home";
 
@@ -55,6 +56,9 @@ const App = (props) => {
               </Route>
               <Route path="/edit/collection/:collectionId" exact>
                 <CreateCollection />
+              </Route>
+              <Route path="/edit/item/:itemId" exact>
+                <EditItem />
               </Route>
               <Route path="/item/:itemId" exact>
                 <ViewItem />

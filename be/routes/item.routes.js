@@ -91,4 +91,20 @@ router.delete(
   }
 )
 
+router.put(
+  '/',
+  [],
+  async(req, res) => {
+    try {
+      const { id, title, itemTags } = req.body;
+      const modifiedBulk = itemTags.map(tag => ({ TagTagId: tag.TagId, ItemId: id }))
+      await Item.update({ Name: title, ...req.body }, { where: { id : id }})
+      await ItemTag.bulkCreate(modifiedBulk)
+      res.status(200).json({ message: "updated" })
+    } catch (e) {
+      res.status(500).json({ message: e.message })
+    }
+  }
+)
+
 module.exports = router
