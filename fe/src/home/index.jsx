@@ -3,10 +3,9 @@ import {
   CircularProgress,
   TableContainer,
   Box,
-  Grid,
+  Chip,
   Table,
   TableBody,
-  Typography,
   TableHead,
   TableRow,
   TableCell,
@@ -14,13 +13,14 @@ import {
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import uniqid from "uniqid";
-
 import { withTranslation } from "react-i18next";
+import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
+
 import SingleItem from "../shared/components/SingleItem";
 import { fetchLastItems } from "../actions/item";
 
 const HomePage = (props) => {
-  const { t, fetchInitialItems, items, isLoading } = props;
+  const { t, fetchInitialItems, items, tags } = props;
   useEffect(async () => {
     await fetchInitialItems();
   }, []);
@@ -46,12 +46,26 @@ const HomePage = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Box style={{ display: "flex", justifyContent: "space-evenly" }}>
+        {tags.map((tag) => (
+          <Chip
+            key={uniqid()}
+            icon={<LocalOfferOutlinedIcon />}
+            component="a"
+            href={`/tag/${tag.TagId}`}
+            variant="outlined"
+            clickable
+            label={`${tag.text}`}
+          />
+        ))}
+      </Box>
     </>
   );
 };
 
 const mapStateToProps = (state) => ({
   items: state.item.lastItems,
+  tags: state.item.lastTags,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -47,9 +47,9 @@ const fetchItemSuccess = (data) => ({
   payload: data,
 });
 
-const fetchLastItemSuccess = (data) => ({
+const fetchLastItemSuccess = (data, tags) => ({
   type: itemTypes.FETCH_LAST_ITEM_SUCCESS,
-  payload: data,
+  payload: { data, tags },
 });
 
 const fetchItemFailure = (error, status) => ({
@@ -81,7 +81,7 @@ const fetchLastItems = () => {
       const result = await httpRequest(`/api/last/item`, "GET");
       const json = await result.json();
       if (result.ok) {
-        dispatch(fetchLastItemSuccess(json.items));
+        dispatch(fetchLastItemSuccess(json.items, json.tags));
       } else {
         dispatch(fetchItemFailure(json.message, result.status));
       }

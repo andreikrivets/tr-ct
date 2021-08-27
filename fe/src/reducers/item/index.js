@@ -6,6 +6,7 @@ const initialState = {
   error: { message: "", status: "" },
   data: [],
   lastItems: [],
+  lastTags: [],
 };
 
 const item = (state = initialState, action) => {
@@ -44,7 +45,8 @@ const item = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        lastItems: action.payload,
+        lastItems: action.payload.data,
+        lastTags: action.payload.tags,
       };
     case itemTypes.ITEM_FETCH_FAILURE:
       return {

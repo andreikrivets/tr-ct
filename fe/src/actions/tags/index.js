@@ -21,6 +21,16 @@ const tagsFetchFailure = (error, status) => ({
   payload: { message: error, status },
 });
 
+const sendTagsSuccess = (tags) => ({
+  type: tagsTypes.CREATE_TAGS_SUCCESS,
+  payload: tags,
+});
+
+const searchTagSuccess = (data) => ({
+  type: tagsTypes.SEARCH_TAG_SUCCESS,
+  payload: data,
+});
+
 const fetchTags = () => {
   return async (dispatch) => {
     dispatch(tagsFetchStart());
@@ -38,23 +48,9 @@ const fetchTags = () => {
   };
 };
 
-const sendTagsStart = () => ({
-  type: tagsTypes.CREATE_TAGS_START,
-});
-
-const sendTagsSuccess = (tags) => ({
-  type: tagsTypes.CREATE_TAGS_SUCCESS,
-  payload: tags,
-});
-
-const sendTagsFailure = (error, status) => ({
-  type: tagsTypes.CREATE_TAGS_FAILURE,
-  payload: { message: error, status },
-});
-
 const sendTags = (tags) => {
   return async (dispatch) => {
-    dispatch(sendTagsStart());
+    dispatch(tagsFetchStart());
     if (!tags) return;
     try {
       const result = await httpRequest(`/api/tags`, "POST", tags);
@@ -62,12 +58,29 @@ const sendTags = (tags) => {
       if (result.ok) {
         dispatch(sendTagsSuccess(json.tags));
       } else {
-        dispatch(sendTagsFailure(json.message, result.status));
+        dispatch(tagsFetchFailure(json.message, result.status));
       }
     } catch (e) {
-      dispatch(sendTagsFailure(e));
+      dispatch(tagsFetchFailure(e));
     }
   };
 };
 
-export { fetchTags, sendTags };
+const searchTagItems = (tag) => {
+  return async (dispatch) => {
+    dispatch(tagsFetchStart());
+    try {
+      const result = await httpRequest(`/api/tags/?q=${tag}`, "GET");
+      const json = await result.json();
+      if (result.ok) {
+        dispatch(searchTagSuccess(json.items));
+      } else {
+        dispatch(tagsFetchFailure(json.message, result.status));
+      }
+    } catch (e) {
+      dispatch(tagsFetchFailure(e));
+    }
+  };
+};
+
+export { fetchTags, sendTags, searchTagItems };

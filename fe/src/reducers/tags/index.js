@@ -8,6 +8,7 @@ const initialState = {
     status: "",
   },
   data: {},
+  items: {},
 };
 
 const tags = (state = initialState, action) => {
@@ -30,23 +31,20 @@ const tags = (state = initialState, action) => {
         loading: false,
         error: { message: action.payload.message, status: action.payload.status },
       };
-    case tagsTypes.CREATE_TAGS_START:
-      return {
-        ...state,
-        loading: true,
-      };
     case tagsTypes.CREATE_TAGS_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
       };
-    case tagsTypes.CREATE_TAGS_FAILURE:
+    case tagsTypes.SEARCH_TAG_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: { message: action.payload.message, status: action.payload.status },
+        error: null,
+        items: { ...action.payload[0] },
       };
+
     default:
       return state;
   }

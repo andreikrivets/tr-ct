@@ -3,7 +3,7 @@ const { Router } = require('express')
 
 const { Tag } = require('../models/tags')
 const { Item } = require('../models/item')
-const { ItemTags } = require('../models/itemTags')
+const { ItemTag } = require('../models/itemTags')
 
 const router = Router()
 
@@ -11,12 +11,30 @@ router.get(
   '/',
   [],
   async(req, res) => {
-    try {
-      const tags = await Tag.findAll();
-      setTimeout(() => res.status(200).json({ tags }), 2000)
-    } catch (e) {
-      res.status(500).json({ message: e.message })
+    const { q } = req.query
+    if (!q) {
+      try {
+        const tags = await Tag.findAll();
+        res.status(200).json({ tags });
+      } catch (e) {
+        res.status(500).json({ message: e.message })
+      }
+    } else {
+      try {
+        Item.belongsToMany(Tag,  { through: ItemTag })
+        Tag.belongsToMany(Item,  { through: ItemTag })
+        const items = await Tag.findAll({ 
+          where: { TagId: q },
+          include: {
+            model: Item,
+          }
+         });
+        res.status(200).json({ items });
+      } catch (e) {
+        res.status(500).json({ message: e.message })
+      }
     }
+    
 })
 
 router.post(
