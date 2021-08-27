@@ -23,9 +23,6 @@ router.post(
         itemTags, id,
       } = req.body
 
-      // Item.belongsToMany(Tag,  { through: ItemTag })
-      // Tag.belongsToMany(Item,  { through: ItemTag })
-
       const date1 = addDate1 ? new Date(addDate1).toISOString().slice(0, 10) : null
       const date2 = addDate2 ? new Date(addDate2).toISOString().slice(0, 10) : null
       const date3 = addDate3 ? new Date(addDate3).toISOString().slice(0, 10) : null
@@ -65,13 +62,13 @@ router.get(
       const { id } = req.params
       Item.belongsToMany(Tag,  { through: ItemTag })
       Tag.belongsToMany(Item,  { through: ItemTag })
+      Collection.hasMany(Item)
+      Item.belongsTo(Collection)
+
       const item = await Item.findOne({ 
         where: { id: id },
-        include: {
-          model: Tag,
-        }
+        include: [Collection, Tag]
       })
-      // const { dataValues } = item
       res.status(200).json({ items: item })
     } catch (e) {
       res.status(500).json({ message: e.message })

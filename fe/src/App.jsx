@@ -1,22 +1,18 @@
-/* eslint-disable no-unused-vars */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import { createTheme } from "@material-ui/core/styles";
-import { ThemeProvider, Paper, Modal, Snackbar, IconButton } from "@material-ui/core";
+import { ThemeProvider, Paper, Modal } from "@material-ui/core";
 import { I18nextProvider } from "react-i18next";
 import { connect } from "react-redux";
 import i18n from "./shared/locales/i18n";
 
 import { dark, light } from "./shared/theme";
-import Login from "./auth/login";
-import Register from "./auth/register";
 import ErrorSnackbar from "./shared/components/ErrorSnackbar";
 
 import { CreateCollection, ViewCollection } from "./collection";
 import Navbar from "./shared/components/Navbar/Navbar";
 import Profile from "./profile";
 import { closeModal } from "./actions/app";
-import CreateItem from "./item/create";
 import ViewItem from "./item/view";
 import HomePage from "./home";
 
@@ -33,7 +29,6 @@ const App = (props) => {
       <ThemeProvider theme={appliedTheme}>
         <Paper elevation={3}>
           <Router>
-            {/* <Navbar themeSwitch={themeSwitch} checked={!!darkTheme} /> */}
             <Navbar />
             <Modal open={modal} onClose={() => closeModalWindow()}>
               <div
@@ -42,7 +37,7 @@ const App = (props) => {
                   margin: "5%",
                   padding: "5%",
                   overflow: "auto",
-                  height: "100%",
+                  // height: "100%",
                 }}
               >
                 {component}
@@ -73,8 +68,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { app, auth } = state;
-
+  const { app } = state;
   return {
     modal: app.modal,
     component: app.component,

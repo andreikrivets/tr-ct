@@ -1,6 +1,5 @@
 import {
   Typography,
-  Divider,
   Box,
   Checkbox,
   CircularProgress,
@@ -34,7 +33,7 @@ const ViewItem = (props) => {
     (key) => key.startsWith("add") && fetchedItemData[key]
   );
 
-  const { Name, createdAt, Tags } = fetchedItemData;
+  const { Name, createdAt, Tags, Collection } = fetchedItemData;
   const getElement = (field) => {
     if (field.startsWith("addText")) return <ReactMarkdown>{fetchedItemData[field]}</ReactMarkdown>;
     if (field.startsWith("addBool")) return <Checkbox checked={!!fetchedItemData[field]} />;
@@ -42,20 +41,25 @@ const ViewItem = (props) => {
   };
   const date = new Date(createdAt).toLocaleDateString();
   return (
-    <div>
-      <Typography variant="h2">{isLoading ? <Skeleton width={100} /> : Name}</Typography>
-      {isLoading ? <Skeleton width={100} /> : <Typography variant="body1">{date}</Typography>}
-      {Tags && Tags.map((tag) => <Chip key={uniqid()} label={tag.text} />)}
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "5%" }}>
+      {isLoading ? (
+        <Skeleton width={600} height={130} />
+      ) : (
+        <>
+          <Typography variant="h2">{Name}</Typography>
+          <Typography variant="body1">{date}</Typography>
+          <div>{Tags && Tags.map((tag) => <Chip key={uniqid()} label={tag.text} />)}</div>
+        </>
+      )}
       <TableContainer component={Box}>
         <Table>
           <TableBody>
             <TableRow style={{ width: "100%" }}>
               {additionalHeaders.map((field) => (
                 <TableCell key={uniqid()} style={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="h5" style={{ margin: "10px", width: "10%" }}>
-                    {fetchedItemData[field]}
+                  <Typography variant="h4" style={{ margin: "10px", width: "20%" }}>
+                    {Collection[field]}
                   </Typography>
-                  <Divider orientation="vertical" flexItem style={{ margin: "0 5%" }} />
                   {getElement(field)}
                 </TableCell>
               ))}
