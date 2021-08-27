@@ -63,9 +63,14 @@
       "date": "date",
       "boolean": "checkbox",
       "ph": "column name",
-      "btn": "add",
       "h1s": "create item into",
-      "h1e": "collection"
+      "h1e": "collection",
+      "h2s": "update item in",
+      "btn": {
+        "create": "create",
+        "update": "update",
+        "add": "add"
+      }
     },
     "items": {
       "itemName": "item name",
