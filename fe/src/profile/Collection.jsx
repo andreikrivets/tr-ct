@@ -53,9 +53,6 @@ const ProfileCollection = ({ t, data, user, handleDelete }) => {
           <TableBody>
             <TableRow hover>
               <TableCell style={{ width: "5%", textAlign: "center" }}>
-                <Checkbox color="primary" />
-              </TableCell>
-              <TableCell style={{ width: "5%", textAlign: "center" }}>
                 {ImageId ? <Avatar src={ImageId} alt={Name} /> : <NotInterestedOutlinedIcon />}
               </TableCell>
               <TableCell
