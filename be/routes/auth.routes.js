@@ -35,7 +35,8 @@ router.post(
           config.get('jwtSecret'),
           { expiresIn: '1h' }
       )
-      res.json({ token, userId: user.id })
+      const loginDate = Date.now();
+      res.json({ token, userId: user.id, loginDate })
       } catch (e) {
         res.status(500).json({ message: e.message })
       }
