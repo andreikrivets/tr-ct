@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { Divider, InputBase, IconButton, Paper, Typography } from "@material-ui/core";
 import Skeleton from "react-loading-skeleton";
-import { InputBase, IconButton, Paper, Typography } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
 import uniqid from "uniqid";
-import SearchIcon from "@material-ui/icons/Search";
 
 import { withTranslation } from "react-i18next";
 import searchItem from "../../../actions/search";
@@ -19,8 +19,8 @@ const SearchResults = ({ t, q, data, isLoading, sendSearch }) => {
   };
 
   return (
-    <Paper>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+    <Paper style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", paddingTop: "5%" }}>
         <InputBase
           value={searchVal}
           onChange={(e) => setSearchVal(e.target.value)}
@@ -31,6 +31,7 @@ const SearchResults = ({ t, q, data, isLoading, sendSearch }) => {
           <SearchIcon />
         </IconButton>
       </div>
+      <Divider style={{ width: "50%" }} />
       {!data.length ? (
         <Typography variant="subtitle1">{t("notfound")}</Typography>
       ) : (

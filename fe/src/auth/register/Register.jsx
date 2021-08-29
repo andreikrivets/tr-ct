@@ -20,9 +20,9 @@ const Register = (props) => {
   return (
     <Container component="main" maxWidth="xl">
       <CssBaseline />
-      <div>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div className="avatar-wrapper">
-          <Avatar>
+          <Avatar style={{ width: "150px", height: "150px" }}>
             {isLoading ? <Skeleton circle height={50} width={50} /> : <LockOutlinedIcon />}
           </Avatar>
         </div>
@@ -40,6 +40,7 @@ const Register = (props) => {
           {({ handleChange, touched, submitForm, errors, isSubmitting, validateForm }) => {
             return (
               <form
+                style={{ width: "60%" }}
                 onSubmit={(e) => {
                   e.preventDefault();
                   submitForm(e);

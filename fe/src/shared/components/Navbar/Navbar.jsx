@@ -53,7 +53,6 @@ const Navbar = (props) => {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
@@ -63,12 +62,10 @@ const Navbar = (props) => {
     setAnchorEl(null);
     closeModalWindow();
   };
-
   const handleLangChange = (e) => {
     setLang(e.target.value);
     changeLang(e.target.value);
   };
-
   const handleOpenSearchResults = async () => {
     if (!searchVal && !searchVal.trim()) return;
     sendSearch(searchVal.trim());
@@ -86,7 +83,6 @@ const Navbar = (props) => {
         <Typography variant="h4" style={{ cursor: "pointer" }} onClick={() => history.push("/")}>
           MRKT
         </Typography>
-
         <div style={{ display: "flex" }}>
           <InputBase
             value={searchVal}
@@ -99,8 +95,8 @@ const Navbar = (props) => {
           </IconButton>
         </div>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="lang-select"
+          id="demo-lang-select"
           value={lang}
           onChange={handleLangChange}
         >
@@ -109,9 +105,7 @@ const Navbar = (props) => {
         </Select>
         <DarkModeToggle checked={theme} onChange={changeColorTheme} size={50} speed={5} />
         <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenu}>
-          <Avatar>
-            <AccountCircle />
-          </Avatar>
+          <Avatar>{loggedIn ? <AccountCircle /> : <ExitToAppOutlinedIcon />}</Avatar>
         </IconButton>
         <>
           {loggedIn ? (
@@ -153,14 +147,13 @@ const Navbar = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { auth, app, profile } = state;
+  const { auth, app } = state;
   return {
     loggedIn: auth.loggedIn,
     userId: auth.user.userId,
     modal: app.modal,
     theme: app.theme,
-    language: app.lang,
-    profileData: profile.data,
+    language: app.lang || "en",
   };
 };
 

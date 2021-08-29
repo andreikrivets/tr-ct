@@ -14,8 +14,8 @@ const Login = (props) => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className="avatar-wrapper">
-        <Avatar>
-          {isLoading ? <Skeleton circle height={50} width={50} /> : <LockOutlinedIcon />}
+        <Avatar style={{ width: "150px", height: "150px" }}>
+          {isLoading ? <Skeleton circle height={150} width={150} /> : <LockOutlinedIcon />}
         </Avatar>
       </div>
       <Typography variant="h5">{isLoading ? <Skeleton /> : t("form.header")}</Typography>

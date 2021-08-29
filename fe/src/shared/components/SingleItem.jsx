@@ -47,10 +47,11 @@ const SingleItem = (props) => {
     setDeleteId(id);
   };
 
+  const itemWidth = Collection ? "25%" : "5%";
   return (
     <TableRow hover>
       <TableCell style={{ width: "5%" }}>{id}</TableCell>
-      <TableCell style={{ width: "15%" }}>
+      <TableCell style={{ width: itemWidth }}>
         <Link to={`/item/${id}`}>{Name}</Link>
       </TableCell>
       {Tags ? (

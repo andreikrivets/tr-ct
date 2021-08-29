@@ -1,11 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { withTranslation } from "react-i18next";
 import CreatableSelect from "react-select/creatable";
 import { connect } from "react-redux";
-
 import Skeleton from "react-loading-skeleton";
 
-import { fetchTags } from "../../actions/tags";
+import tagSelectStyles from "./tagSelectStyles";
+import { fetchTags } from "../../../../actions/tags";
 
 const createTag = (id, val) => ({
   value: id,
@@ -21,7 +22,7 @@ const TagSelect = (props) => {
   useEffect(() => {
     setOpts(tags[0] ? tags.map((tag) => createTag(tag.TagId, tag.text)) : []);
   }, [tags]);
-  // console.log()
+
   const handleCreateTag = (v) => {
     if (val.length <= 3) {
       const newOption = createTag(opts.length + 1, v);
@@ -38,14 +39,16 @@ const TagSelect = (props) => {
   return (
     <>
       <CreatableSelect
-        placeholder={`${t("tags")}`}
+        placeholder={`${t("items.tags")}`}
         isMulti
         maxMenuHeight={150}
+        width="40%"
         isLoading={isLoading}
         onChange={handleTagChange}
         value={val}
         onCreateOption={handleCreateTag}
         options={opts}
+        styles={tagSelectStyles()}
       />
     </>
   );
@@ -61,4 +64,4 @@ const mapStateToProps = (state) => ({
 });
 
 const TagSelectConnected = connect(mapStateToProps, mapDispatchToProps)(TagSelect);
-export default withTranslation("items")(TagSelectConnected);
+export default withTranslation("collection")(TagSelectConnected);

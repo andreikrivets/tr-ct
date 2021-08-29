@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Avatar,
-  CircularProgress,
   Typography,
   Card,
   Chip,
@@ -21,7 +20,6 @@ import { withTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import uniqid from "uniqid";
-import { useTheme } from "@material-ui/core/styles";
 
 import CreateItem from "../../item/create";
 import SingleItem from "../../shared/components/SingleItem";
@@ -41,7 +39,6 @@ const ViewCollection = (props) => {
   } = props;
   const { collectionId } = useParams();
   const { Name, Description, ImageId, Type, createdAt, OwnerId } = collection;
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   useEffect(async () => {
@@ -58,7 +55,7 @@ const ViewCollection = (props) => {
   const date = new Date(createdAt).toLocaleDateString();
   return (
     <Card style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Avatar alt={Name} style={{ width: "200px", height: "200px" }}>
+      <Avatar alt={Name} style={{ marginTop: "3%", width: "150px", height: "150px" }}>
         {ImageId ? (
           <img src={ImageId} alt={Name} />
         ) : (
@@ -82,14 +79,14 @@ const ViewCollection = (props) => {
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableHead>
-            <TableRow style={{ background: `${theme.palette.grey[100]}` }}>
+            <TableRow>
               <TableCell>{t("fields.id")}</TableCell>
               <TableCell>{t("fields.name")}</TableCell>
               <TableCell>{t("fields.tags")}</TableCell>
               {additionalKeys.map((key) => (
                 <TableCell key={uniqid()}>{collection[key]}</TableCell>
               ))}
-              <TableCell>edit</TableCell>
+              <TableCell style={{ textAlign: "center" }}>edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
