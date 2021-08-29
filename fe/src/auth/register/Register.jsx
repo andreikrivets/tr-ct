@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Avatar,
   Button,
@@ -16,7 +16,11 @@ import Skeleton from "react-loading-skeleton";
 import validator from "./validators";
 
 const Register = (props) => {
-  const { t, register, isLoading } = props;
+  const { t, register, isLoading, authError, closeModalWindow } = props;
+  const errorRef = useRef("");
+  if (authError) {
+    if (authError.message) errorRef.current = authError.message;
+  } else errorRef.current = "";
   return (
     <Container component="main" maxWidth="xl">
       <CssBaseline />
@@ -32,9 +36,13 @@ const Register = (props) => {
         <Formik
           initialValues={{ email: "", password: "" }}
           validate={(v) => validator(v, t)}
-          onSubmit={(values, { setSubmitting }) => {
-            register(values);
-            setSubmitting(false);
+          onSubmit={async (values, { resetForm, setSubmitting }) => {
+            await register(values);
+            if (!errorRef.current) {
+              resetForm();
+              setSubmitting(false);
+              closeModalWindow();
+            }
           }}
         >
           {({ handleChange, touched, submitForm, errors, isSubmitting, validateForm }) => {

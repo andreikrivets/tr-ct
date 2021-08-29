@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Avatar, Button, CssBaseline, TextField, Typography, Container } from "@material-ui/core/";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Formik } from "formik";
@@ -8,8 +8,11 @@ import Skeleton from "react-loading-skeleton";
 import validator from "./validator";
 
 const Login = (props) => {
-  const { t, login, isLoading, closeModalWindow } = props;
-
+  const { t, login, isLoading, closeModalWindow, authError } = props;
+  const errorRef = useRef("");
+  if (authError) {
+    if (authError.message) errorRef.current = authError.message;
+  } else errorRef.current = "";
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -22,11 +25,13 @@ const Login = (props) => {
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(v) => validator(v, t)}
-        onSubmit={async (values, { setSubmitting }) => {
-          login(values).then(() => {
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
+          await login(values);
+          if (!errorRef.current) {
+            resetForm();
+            setSubmitting(false);
             closeModalWindow();
-          });
-          setSubmitting(false);
+          }
         }}
       >
         {({ values, errors, touched, handleChange, validateForm, submitForm, isSubmitting }) => (
