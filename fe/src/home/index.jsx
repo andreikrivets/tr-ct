@@ -18,13 +18,14 @@ import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 
 import SingleItem from "../shared/components/SingleItem";
 import { fetchLastItems } from "../actions/item";
+import CircularProgressBar from "../shared/components/CircularProgressBar";
 
 const HomePage = (props) => {
-  const { t, fetchInitialItems, items, tags } = props;
+  const { t, fetchInitialItems, items, tags, isLoading } = props;
   useEffect(async () => {
     await fetchInitialItems();
   }, []);
-  if (!items) return <CircularProgress />;
+  if (!items || isLoading) return <CircularProgressBar />;
   return (
     <>
       <TableContainer component={Box} style={{ marginTop: "3%" }}>

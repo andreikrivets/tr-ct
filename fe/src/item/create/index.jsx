@@ -1,15 +1,15 @@
-import { Typography, Grid, Divider, Button, CircularProgress } from "@material-ui/core";
+import { Typography, Grid, Divider, Button } from "@material-ui/core";
 import { Formik, Form, FastField, FieldArray } from "formik";
 import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 
 import AdditionalFields from "./additionalFields";
-import TagSelect from "./TagSelect";
+import TagSelect from "./additionalFields/TagSelect";
 import { sendTags } from "../../actions/tags";
 import { sendItem, updateItem } from "../../actions/item";
-
 import { LineField, TitleField } from "./additionalFields/LineFields";
+import CircularProgressBar from "../../shared/components/CircularProgressBar";
 
 const CreateItem = (props) => {
   const { t, sendNewTags, data, sendNewItem, content, updateItemData, isLoading } = props;
@@ -102,7 +102,7 @@ const CreateItem = (props) => {
           );
         }}
       </Formik>
-      {isLoading && <CircularProgress />}
+      {isLoading && <CircularProgressBar />}
     </>
   );
 };

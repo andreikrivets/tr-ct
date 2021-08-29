@@ -1,20 +1,12 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { withTranslation } from "react-i18next";
-import {
-  Avatar,
-  Paper,
-  Typography,
-  CircularProgress,
-  Chip,
-  Button,
-  Modal,
-} from "@material-ui/core";
+import { Avatar, Paper, Typography, Chip, Button } from "@material-ui/core";
 import uniqid from "uniqid";
 import { useParams } from "react-router-dom";
 
 import { CreateCollection } from "../collection";
 import Collection from "./Collection";
+import CircularProgressBar from "../shared/components/CircularProgressBar";
 
 const Profile = (props) => {
   const {
@@ -34,16 +26,12 @@ const Profile = (props) => {
 
   const { firstName, lastName, email, createdAt, type } = profile;
   const date = new Date(createdAt).toLocaleDateString();
-  if (!profile.firstName || isLoading || !collections)
-    return (
-      <div style={{ textAlign: "center" }}>
-        <CircularProgress color="secondary" />
-      </div>
-    );
+  if (!profile.firstName || isLoading || !collections) return <CircularProgressBar />;
+  const isAuthorised = user.userId === +userId;
   const handleDelete = (delId) => deleteProfileCollection(delId);
   return (
     <Paper style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Avatar style={{ height: "100px", width: "100px" }}>
+      <Avatar style={{ marginTop: "3%", height: "100px", width: "100px" }}>
         {`${firstName.slice(0, 1)}${lastName.slice(0, 1)}`}
       </Avatar>
       <Typography
@@ -53,7 +41,7 @@ const Profile = (props) => {
       <Chip label={`${type === "user" ? t("user") : t("admin")}`} />
       <Typography variant="h4">{`${email}`}</Typography>
       <Typography variant="caption">{`${t("memberSince")} ${date}`}</Typography>
-      {user.userId === +userId && (
+      {isAuthorised && (
         <Button
           variant="outlined"
           color="secondary"

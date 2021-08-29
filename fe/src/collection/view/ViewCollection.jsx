@@ -25,6 +25,7 @@ import { useTheme } from "@material-ui/core/styles";
 
 import CreateItem from "../../item/create";
 import SingleItem from "../../shared/components/SingleItem";
+import CircularProgressBar from "../../shared/components/CircularProgressBar";
 
 const ViewCollection = (props) => {
   const {
@@ -46,7 +47,7 @@ const ViewCollection = (props) => {
   useEffect(async () => {
     await fetchCollectionData(collectionId);
   }, []);
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <CircularProgressBar />;
 
   const handleDeleteItem = () => {
     deleteCollectionItem(deleteId);

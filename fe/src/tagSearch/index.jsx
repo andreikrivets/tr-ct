@@ -7,6 +7,7 @@ import uniqid from "uniqid";
 
 import { withTranslation } from "react-i18next";
 import { searchTagItems } from "../actions/tags";
+import CircularProgressBar from "../shared/components/CircularProgressBar";
 
 const TagSearch = ({ items, fetchTagItems }) => {
   const history = useHistory();
@@ -14,9 +15,9 @@ const TagSearch = ({ items, fetchTagItems }) => {
   useEffect(async () => {
     await fetchTagItems(tagId);
   }, []);
-  if (!items) return null;
+  if (!items) return <CircularProgressBar />;
   const { Items, text } = items;
-  if (!Items) return null;
+  if (!Items) return <CircularProgressBar />;
 
   return (
     <Paper style={{ padding: "5%" }}>
