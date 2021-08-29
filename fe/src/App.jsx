@@ -26,23 +26,23 @@ const App = (props) => {
       <ThemeProvider theme={appliedTheme}>
         <Paper elevation={3} style={{ paddingBottom: "5%" }}>
           <Box component={Paper} mx="15%" pb="1%">
-          <Router>
-            <Navbar />
-            <Modal open={modal} onClose={() => closeModalWindow()}>
-              <Paper
-                style={{
-                  margin: "5%",
+            <Router>
+              <Navbar />
+              <Modal open={modal} onClose={() => closeModalWindow()}>
+                <Paper
+                  style={{
+                    margin: "5%",
                     padding: "2%",
-                  overflow: "auto",
+                    overflow: "auto",
                     height: "90%",
-                }}
-              >
-                {component}
-              </Paper>
-            </Modal>
-            <ErrorSnackbar />
-            {routes}
-          </Router>
+                  }}
+                >
+                  {component}
+                </Paper>
+              </Modal>
+              <ErrorSnackbar />
+              {routes}
+            </Router>
           </Box>
         </Paper>
       </ThemeProvider>

@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import {
   Avatar,
-  Checkbox,
   Chip,
   Typography,
   IconButton,
@@ -15,9 +13,6 @@ import {
   DialogTitle,
   TableBody,
   Tooltip,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Button,
 } from "@material-ui/core";
 import uniqid from "uniqid";
@@ -26,7 +21,7 @@ import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined"
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import { withTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const ProfileCollection = ({ t, data, user, handleDelete }) => {
   const { Name, Description, Type, ImageId, id } = data;
@@ -46,6 +41,7 @@ const ProfileCollection = ({ t, data, user, handleDelete }) => {
     setOpen(false);
     handleDelete(id);
   };
+  const isAuthorised = user.userId === +userId;
   return (
     <>
       <TableContainer component={Box}>
@@ -80,15 +76,15 @@ const ProfileCollection = ({ t, data, user, handleDelete }) => {
                     : null}
                 </div>
               </TableCell>
-              {user.userId === +userId && (
+              {isAuthorised && (
                 <TableCell style={{ width: "5%" }}>
                   <Tooltip title={t("editLabel")}>
-                    <IconButton onClick={() => history.push(`/edit/collection/${id}`)}>
+                    <IconButton size="small" onClick={() => history.push(`/edit/collection/${id}`)}>
                       <EditOutlinedIcon />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title={t("deleteLabel")}>
-                    <IconButton onClick={() => setOpen(true)}>
+                    <IconButton size="small" onClick={() => setOpen(true)}>
                       <DeleteForeverOutlinedIcon />
                     </IconButton>
                   </Tooltip>

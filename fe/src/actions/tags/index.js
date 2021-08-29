@@ -1,11 +1,5 @@
 import * as tagsTypes from "../types/tags";
-
-const httpRequest = async (url, method = "GET", data) => {
-  const body = data ? JSON.stringify(data) : null;
-  const headers = { "Content-Type": "application/json" };
-  const res = await fetch(url, { method, headers, body });
-  return res;
-};
+import { httpRequest } from "../utils";
 
 const tagsFetchStart = () => ({
   type: tagsTypes.FETCH_TAGS_START,

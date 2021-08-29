@@ -14,27 +14,11 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case types.USER_REGISTER_STARTED:
-      return {
-        ...state,
-        loading: true,
-      };
     case types.USER_REGISTER_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-      };
-    case types.USER_REGISTER_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: { message: action.payload.message, status: action.payload.status },
-      };
-    case types.USER_LOGIN_STARTED:
-      return {
-        ...state,
-        loading: true,
       };
     case types.USER_LOGIN_SUCCESS:
       return {
@@ -44,11 +28,17 @@ const auth = (state = initialState, action) => {
         loggedIn: true,
         user: action.payload,
       };
-    case types.USER_LOGIN_FAILURE:
+    case types.USER_AUTH_STARTED:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case types.USER_AUTH_FAILURE:
       return {
         ...state,
         loading: false,
-        error: { message: action.payload.message, status: action.payload.status },
+        error: action.payload,
       };
     case types.USER_LOGOUT:
       return {
