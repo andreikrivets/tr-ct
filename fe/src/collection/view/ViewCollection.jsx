@@ -103,7 +103,7 @@ const ViewCollection = (props) => {
               />
             ))}
           </TableBody>
-          {!items.length && <caption>there are no items</caption>}
+          {!items.length && <caption>{t("fields.noItems")}</caption>}
         </Table>
       </TableContainer>
       <Dialog onClose={() => setOpen(false)} open={open}>

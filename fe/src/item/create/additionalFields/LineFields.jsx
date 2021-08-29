@@ -26,12 +26,12 @@ const TitleField = ({ t, field: { onChange, value } }) => {
       id="title"
       name="title"
       inputProps={{ maxLength: 40 }}
-      label={t("itemName")}
+      label={t("items.itemName")}
       onChange={onChange}
       value={value.title}
     />
   );
 };
 
-const TranslatedTitleField = withTranslation("items")(TitleField);
+const TranslatedTitleField = withTranslation("collection")(TitleField);
 export { TranslatedTitleField as TitleField, LineField };

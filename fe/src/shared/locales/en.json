@@ -69,6 +69,7 @@
       "h1s": "create item into",
       "h1e": "collection",
       "h2s": "update item in",
+      "noItems": "there are no items",
       "btn": {
         "create": "create",
         "update": "update",
@@ -103,7 +104,7 @@
     "deleteLabel": "delete"
   },
   "main": {
-    "lastItem": "last elements",
+    "lastItems": "last elements",
     "tableHeaders": {
       "id": "id",
       "item": "item",
