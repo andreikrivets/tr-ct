@@ -1,0 +1,4 @@
+.mde-tabs button,
+.mde-header-item button {
+  color: inherit !important;
+}
