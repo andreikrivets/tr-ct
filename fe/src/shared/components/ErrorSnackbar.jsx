@@ -1,51 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { Snackbar, IconButton } from "@material-ui/core";
+import { Paper, Snackbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { logOut } from "../../actions/auth";
+import useAuth from "../../hooks/auth.hook";
 
 const ErrorSnackbar = (props) => {
   const { error } = props;
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const history = useHistory();
-  console.log(error);
+  const { checkIfExpired } = useAuth();
   useEffect(() => {
+    checkIfExpired();
+    // console.log(checkIfExpired());
     if (error[0]) {
       setOpen(() => true);
+      setMessage(message === error[0].message ? null : error[0].message);
       // if (error.status === 404) {
       //   history.push("/user");
       // }
       if (error[0].status === 404) {
-        // handleLogOut();
         history.goBack();
       }
     }
   }, [error]);
 
-  if (!error.length) return null;
+  const handleClose = () => {
+    setOpen(false);
+    setMessage(null);
+  };
+  if (!error.length || !message) return null;
   return (
     <Snackbar
       open={open}
       anchorOrigin={{
         vertical: "bottom",
-        horizontal: "left",
+        horizontal: "center",
       }}
       autoHideDuration={6000}
-      onClose={() => setOpen(false)}
-      message={error[0].message}
+      onClose={handleClose}
+      message={message}
       action={
-        <>
-          <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={() => setOpen(false)}
-          >
+        <Paper>
+          <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
             <CloseIcon fontSize="small" />
           </IconButton>
-        </>
+        </Paper>
       }
     />
   );
@@ -61,9 +63,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  logOutUser: () => dispatch(logOut()),
-});
-
-const ErrorSnackbarConnected = connect(mapStateToProps, mapDispatchToProps)(ErrorSnackbar);
+const ErrorSnackbarConnected = connect(mapStateToProps, null)(ErrorSnackbar);
 export default ErrorSnackbarConnected;
