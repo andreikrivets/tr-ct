@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { CircularProgress } from "@material-ui/core";
 
 import CreateItem from "../create";
 import { getItem } from "../../actions/item";
+import CircularProgressBar from "../../shared/components/CircularProgressBar";
 
 const EditItem = ({ item, fetchItem }) => {
   const { itemId } = useParams();
@@ -14,7 +14,7 @@ const EditItem = ({ item, fetchItem }) => {
 
   useEffect(() => {}, [item]);
 
-  if (!item.id) return <CircularProgress />;
+  if (!item.id) return <CircularProgressBar />;
   return (
     <>
       <CreateItem data={item.Collection} content={item} />

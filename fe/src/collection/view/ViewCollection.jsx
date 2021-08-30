@@ -50,6 +50,8 @@ const ViewCollection = (props) => {
     deleteCollectionItem(deleteId);
     setOpen(false);
   };
+
+  const isAuth = isLogged && userId === OwnerId;
   const additionalKeys =
     Object.keys(collection).filter((key) => key.startsWith("add") && collection[key]) || [];
   const date = new Date(createdAt).toLocaleDateString();
@@ -68,7 +70,7 @@ const ViewCollection = (props) => {
         <ReactMarkdown className="react-markdown">{Description}</ReactMarkdown>
         <Typography variant="body1">{date}</Typography>
       </div>
-      {isLogged && userId === OwnerId && (
+      {isAuth && (
         <Button
           variant="outlined"
           onClick={() => openModalWindow(<CreateItem data={collection} />)}
@@ -86,7 +88,7 @@ const ViewCollection = (props) => {
               {additionalKeys.map((key) => (
                 <TableCell key={uniqid()}>{collection[key]}</TableCell>
               ))}
-              <TableCell style={{ textAlign: "center" }}>edit</TableCell>
+              {isAuth && <TableCell style={{ textAlign: "center" }}>{t("edit")}</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
