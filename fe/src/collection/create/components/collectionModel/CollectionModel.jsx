@@ -87,7 +87,7 @@ const CollectionModel = ({ t, additionalTags, setAdditionalTags }) => {
           inputProps={{ maxLength: 20 }}
           onChange={(e) => setColName(e.target.value)}
         />
-        <Tooltip title={`${t("fields.btn")}`}>
+        <Tooltip title={`${t("fields.btn.add")}`}>
           <IconButton onClick={handleSaveTag} color="secondary">
             <SaveIcon />
           </IconButton>
