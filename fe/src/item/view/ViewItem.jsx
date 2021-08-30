@@ -64,7 +64,7 @@ const ViewItem = (props) => {
                   key={uniqid()}
                   icon={<LocalOfferOutlinedIcon />}
                   variant="outlined"
-                  color="primary"
+                  clickable
                   component={Link}
                   to={`/tag/${tag.TagId}`}
                   label={`${tag.text}`}

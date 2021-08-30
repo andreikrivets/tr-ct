@@ -60,7 +60,7 @@ const SingleItem = (props) => {
                 key={uniqid()}
                 component={Link}
                 to={`/tag/${tag.TagId}`}
-                color="primary"
+                clickable
                 variant="outlined"
                 label={tag.text}
               />
