@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { Router } = require('express')
-
+const auth = require('../utils/auth')
 const { Tag } = require('../models/tags')
 const { Item } = require('../models/item')
 const { ItemTag } = require('../models/itemTags')
@@ -39,7 +39,7 @@ router.get(
 
 router.post(
   '/',
-  [],
+  auth,
   async(req, res) => {
     try {
       await Tag.bulkCreate(req.body)

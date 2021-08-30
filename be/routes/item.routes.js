@@ -78,7 +78,7 @@ router.get(
 
 router.delete(
   '/:id',
-  [],
+  auth,
   async(req, res) => {
     try {
       const { id } = req.params
@@ -93,7 +93,7 @@ router.delete(
 
 router.put(
   '/',
-  [],
+  auth,
   async(req, res) => {
     try {
       const { id, title, itemTags } = req.body;
