@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import * as itemTypes from "../../actions/types/item";
 
 const initialError = { message: "", status: "" };
