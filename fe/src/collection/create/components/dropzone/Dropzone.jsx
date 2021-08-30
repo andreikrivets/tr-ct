@@ -9,8 +9,7 @@ const Dropzone = (props) => {
   const text = ["img", "imgUploadStarted", "imgUploadFinished", "imgUploadError"];
   const [formText, setFormText] = useState(`${t(`form.${text[0]}`)}`);
   const theme = useTheme();
-  const color = theme.palette.primary.light;
-
+  const color = theme.palette.text.primary;
   const handleUpload = async (h) => {
     const { file } = h;
     const imageReg = /[/.](gif|jpg|jpeg|tiff|png)$/i;
@@ -35,6 +34,7 @@ const Dropzone = (props) => {
           padding: "2rem 0",
           color: `${color}`,
           marginBottom: "10px",
+          fontFamily: "Helvetica",
         }}
         multiple={false}
         accept="image/*"

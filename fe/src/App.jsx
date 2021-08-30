@@ -24,17 +24,17 @@ const App = (props) => {
   return (
     <I18nextProvider i18n={i18n}>
       <ThemeProvider theme={appliedTheme}>
-        <Paper elevation={3} style={{ paddingBottom: "5%" }}>
+        <Paper elevation={3} style={{ height: "100%" }}>
           <Box component={Paper} mx="15%" pb="1%">
             <Router>
               <Navbar />
               <Modal open={modal} onClose={() => closeModalWindow()}>
                 <Paper
                   style={{
-                    margin: "5%",
-                    padding: "2%",
+                    margin: "5% 15%",
+                    padding: "5%",
                     overflow: "auto",
-                    height: "90%",
+                    height: "80%",
                   }}
                 >
                   {component}

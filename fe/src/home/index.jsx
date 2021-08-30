@@ -53,7 +53,9 @@ const HomePage = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box style={{ padding: "3%", display: "flex", justifyContent: "space-evenly" }}>
+      <Box
+        style={{ padding: "3%", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}
+      >
         {tags.map((tag) => (
           <Chip
             key={uniqid()}

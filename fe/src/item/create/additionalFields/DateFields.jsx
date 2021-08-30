@@ -1,13 +1,13 @@
 import React from "react";
 import uniqid from "uniqid";
-import { TextField } from "@material-ui/core";
+import { Box, TextField } from "@material-ui/core";
 
 const DateFields = (props) => {
   const { date, values, handleChange, additionalValues } = props;
   const currentDate = new Date(Date.now()).toISOString();
 
   return (
-    <>
+    <Box style={{ marginTop: "2%", display: "flex", justifyContent: "space-evenly" }}>
       {date.map((field) => (
         <TextField
           key={uniqid()}
@@ -21,7 +21,7 @@ const DateFields = (props) => {
           onChange={handleChange}
         />
       ))}
-    </>
+    </Box>
   );
 };
 

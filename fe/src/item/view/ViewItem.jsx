@@ -1,8 +1,8 @@
+import React, { useEffect } from "react";
 import {
   Typography,
   Box,
   Checkbox,
-  CircularProgress,
   TableContainer,
   TableBody,
   TableRow,
@@ -10,14 +10,15 @@ import {
   Table,
   Chip,
 } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
+import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import uniqid from "uniqid";
 
 import Skeleton from "react-loading-skeleton";
 import { getItem } from "../../actions/item";
+import CircularProgressBar from "../../shared/components/CircularProgressBar";
 
 const ViewItem = (props) => {
   const { id, isLoading, fetchItemData, fetchedItemData } = props;
@@ -27,7 +28,7 @@ const ViewItem = (props) => {
   }, []);
 
   useEffect(() => {}, [fetchedItemData]);
-  if (!fetchedItemData) return <CircularProgress />;
+  if (!fetchedItemData || isLoading) return <CircularProgressBar />;
 
   const additionalHeaders = Object.keys(fetchedItemData).filter(
     (key) => key.startsWith("add") && fetchedItemData[key]
@@ -41,7 +42,15 @@ const ViewItem = (props) => {
   };
   const date = new Date(createdAt).toLocaleDateString();
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "5%" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "5%",
+        textAlign: "center",
+      }}
+    >
       {isLoading ? (
         <Skeleton width={600} height={130} />
       ) : (
@@ -67,16 +76,20 @@ const ViewItem = (props) => {
       <TableContainer component={Box}>
         <Table>
           <TableBody>
-            <TableRow style={{ width: "100%" }}>
-              {additionalHeaders.map((field) => (
-                <TableCell key={uniqid()} style={{ display: "flex", alignItems: "center" }}>
+            {additionalHeaders.map((field) => (
+              <TableRow key={uniqid()} style={{ display: "flex", width: "100%" }}>
+                <TableCell style={{ display: "flex", alignItems: "center", width: "20%" }}>
                   <Typography variant="h4" style={{ margin: "10px", width: "20%" }}>
                     {Collection[field]}
                   </Typography>
-                  {getElement(field)}
                 </TableCell>
-              ))}
-            </TableRow>
+                <TableCell>
+                  <Box style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                    {getElement(field)}
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

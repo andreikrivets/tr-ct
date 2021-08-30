@@ -1,4 +1,4 @@
-import { Typography, Grid, Divider, Button } from "@material-ui/core";
+import { Typography, Grid, Divider, Button, Box } from "@material-ui/core";
 import { Formik, Form, FastField, FieldArray } from "formik";
 import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
@@ -35,6 +35,7 @@ const CreateItem = (props) => {
         {content ? `${t("fields.h2s")} ` : `${t("fields.h1s")} `}
         {`"${data.Name}" ${t("fields.h1e")}`}
       </Typography>
+      <Divider style={{ margin: "2%" }} />
       <Formik
         initialValues={{ title: content ? content.Name : "", ...additionalFields }}
         onSubmit={async (values) => {
@@ -79,14 +80,14 @@ const CreateItem = (props) => {
               <FieldArray
                 name="friends"
                 render={() => (
-                  <div>
+                  <Box style={{ display: "flex", justifyContent: "space-evenly" }}>
                     {line.map((field, index) => (
                       // eslint-disable-next-line react/no-array-index-key
                       <div key={index}>
                         <FastField component={LineField} av={additionalValues} f={field} />
                       </div>
                     ))}
-                  </div>
+                  </Box>
                 )}
               />
               <Divider style={{ margin: "20px" }} />
