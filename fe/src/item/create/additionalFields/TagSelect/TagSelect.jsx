@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { withTranslation } from "react-i18next";
 import CreatableSelect from "react-select/creatable";
@@ -10,7 +9,7 @@ import { fetchTags } from "../../../../actions/tags";
 
 const createTag = (id, val) => ({
   value: id,
-  label: val.toLowerCase().replace(/\W/g, ""),
+  label: val.toLowerCase().trim(),
 });
 
 const TagSelect = (props) => {
