@@ -9,7 +9,13 @@ a {
 }
 
 td {
+  padding: 5px 0 5px 15px !important
+}
+
 .react-markdown {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
+
+#root {
+  height: 100vh
 }
