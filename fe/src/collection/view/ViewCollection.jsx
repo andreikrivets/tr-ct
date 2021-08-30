@@ -65,7 +65,7 @@ const ViewCollection = (props) => {
       <Typography variant="h2">{Name}</Typography>
       <Chip label={Type} />
       <div>
-        <ReactMarkdown>{Description}</ReactMarkdown>
+        <ReactMarkdown className="react-markdown">{Description}</ReactMarkdown>
         <Typography variant="body1">{date}</Typography>
       </div>
       {isLogged && userId === OwnerId && (

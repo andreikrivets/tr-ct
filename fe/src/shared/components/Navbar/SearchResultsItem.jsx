@@ -16,7 +16,9 @@ const SearchResultsItem = ({ q, data }) => {
       >
         <Typography variant="body1">{data.id}</Typography>
         <Divider style={{ margin: "0 5%" }} orientation="vertical" flexItem />
-        <ReactMarkdown variant="h5">{data.Name.replace(`${q}`, `**${q}**`)}</ReactMarkdown>
+        <ReactMarkdown className="react-markdown">
+          {data.Name.replace(`${q}`, `**${q}**`)}
+        </ReactMarkdown>
       </CardActionArea>
     </Card>
   );

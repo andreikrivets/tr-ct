@@ -9,5 +9,7 @@ a {
 }
 
 td {
-  padding: 0 0 0 15px !important
+.react-markdown {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
 }
