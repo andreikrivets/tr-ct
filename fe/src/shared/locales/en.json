@@ -82,7 +82,13 @@
       "btn": {
         "create": "create item"
       }
-    }
+    },
+    "btn": {
+      "yes": "yes",
+      "no": "no"
+    },
+    "edit": "edit",
+    "confirm": "are you shure?"
   },
   "editor": {
     "write": "write",
