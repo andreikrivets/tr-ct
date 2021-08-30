@@ -1,8 +1,9 @@
 import * as collectionTypes from "../../actions/types/collection";
 
+const initialError = { message: "", status: "" };
 const initialState = {
   loading: false,
-  error: { message: "", status: "" },
+  error: initialError,
   data: {},
   items: [],
   additionalFields: [],
@@ -14,7 +15,7 @@ const collection = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: null,
+        error: initialError,
       };
     case collectionTypes.COLLECTION_FETCH_START:
       return {
@@ -30,7 +31,6 @@ const collection = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: null,
         data: action.payload.collection,
         items: action.payload.items,
         additionalFields:
@@ -48,7 +48,7 @@ const collection = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: null,
+        error: initialError,
         items: state.items.filter((element) => element.id !== action.payload),
       };
     default:
