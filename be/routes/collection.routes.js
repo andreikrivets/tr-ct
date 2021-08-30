@@ -6,8 +6,6 @@ const { Item } = require('../models/item');
 const { Tag } = require('../models/tags')
 const { ItemTag } = require('../models/itemTags')
 
-
-
 const router = Router()
 
 router.post(
@@ -20,7 +18,7 @@ router.post(
       const { values, additionalTags, imageUrl } = req.body
       const { title, description, category } = values
       const { text, line, boolean, date } = additionalTags
-      await Collection.build({ 
+      const collection = Collection.build({ 
         Name: title, 
         Description: description,
         OwnerId: userId,
@@ -40,6 +38,7 @@ router.post(
         addDate2: date ? date[1] || '' : '',
         addDate3: date ? date[2] || '' : '',
       })
+      await collection.save()
       res.status(200).json({ message: 'created'})
     } catch (e) {
       res.status(500).json({ message: e.message })
@@ -77,6 +76,7 @@ router.delete(
       const { id } = req.params
       console.log(id)
       await Collection.destroy({ where: { id: id } })
+      await Item.destroy({ where: { CollectionId: id }})
       res.status(200).json({ message: "deleted" })
     } catch (e) {
       res.status(500).json({ message: e.message })
