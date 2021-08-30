@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import {
   Checkbox,
@@ -13,15 +12,14 @@ import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined"
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import uniqid from "uniqid";
 import ReactMarkdown from "react-markdown";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import { openModal } from "../../actions/app";
 
 const SingleItem = (props) => {
-  const { t, data, additionalKeys, openItem, ownerId, isLogged, userId, setDeleteId, setOpen } =
-    props;
+  const { t, data, additionalKeys, ownerId, isLogged, userId, setDeleteId, setOpen } = props;
   const { id, Name, Tags } = data;
   const history = useHistory();
   if (!data) return <CircularProgress />;
@@ -47,7 +45,7 @@ const SingleItem = (props) => {
     setDeleteId(id);
   };
 
-  const itemWidth = Collection ? "25%" : "5%";
+  const itemWidth = Collection ? "35%" : "15%";
   return (
     <TableRow hover>
       <TableCell style={{ width: "5%" }}>{id}</TableCell>
@@ -56,7 +54,17 @@ const SingleItem = (props) => {
       </TableCell>
       {Tags ? (
         <TableCell style={{ width: "15%" }}>
-          {Tags && Tags.map((tag) => <Chip key={uniqid()} label={tag.text} />)}
+          {Tags &&
+            Tags.map((tag) => (
+              <Chip
+                key={uniqid()}
+                component={Link}
+                to={`/tag/${tag.TagId}`}
+                color="primary"
+                variant="outlined"
+                label={tag.text}
+              />
+            ))}
         </TableCell>
       ) : null}
       {additionalKeys.map((key) => getElement(key))}

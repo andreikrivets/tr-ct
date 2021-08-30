@@ -48,7 +48,20 @@ const ViewItem = (props) => {
         <>
           <Typography variant="h2">{Name}</Typography>
           <Typography variant="body1">{date}</Typography>
-          <div>{Tags && Tags.map((tag) => <Chip key={uniqid()} label={tag.text} />)}</div>
+          <div>
+            {Tags &&
+              Tags.map((tag) => (
+                <Chip
+                  key={uniqid()}
+                  icon={<LocalOfferOutlinedIcon />}
+                  variant="outlined"
+                  color="primary"
+                  component={Link}
+                  to={`/tag/${tag.TagId}`}
+                  label={`${tag.text}`}
+                />
+              ))}
+          </div>
         </>
       )}
       <TableContainer component={Box}>
