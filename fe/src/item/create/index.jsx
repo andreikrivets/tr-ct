@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 
+import { useHistory } from "react-router-dom";
+import { closeModal } from "../../actions/app";
 import AdditionalFields from "./additionalFields";
 import TagSelect from "./additionalFields/TagSelect";
 import { sendTags } from "../../actions/tags";
@@ -12,7 +14,18 @@ import { LineField, TitleField } from "./additionalFields/LineFields";
 import CircularProgressBar from "../../shared/components/CircularProgressBar";
 
 const CreateItem = (props) => {
-  const { t, sendNewTags, data, sendNewItem, content, updateItemData, isLoading } = props;
+  const {
+    t,
+    sendNewTags,
+    data,
+    sendNewItem,
+    content,
+    updateItemData,
+    isLoading,
+    error,
+    closeModalWindow,
+  } = props;
+  const history = useHistory();
   const initialTags = content
     ? content.Tags.map((tag) => ({ value: tag.TagId, label: tag.text }))
     : [];
@@ -46,11 +59,15 @@ const CreateItem = (props) => {
           if (content) {
             await updateItemData({ ...values, id: content.id, itemTags });
           } else await sendNewItem({ ...values, id: data.id, itemTags });
+          if (!error.message) {
+            if (content) history.goBack();
+            else closeModalWindow();
+          }
         }}
         validateOnChange={false}
         validateOnBlur={false}
       >
-        {({ values, handleChange, validateForm, setFieldValue, submitForm }) => {
+        {({ values, handleChange, validateForm, setFieldValue, submitForm, isSubmitting }) => {
           return (
             <Form
               onSubmit={(e) => {
@@ -95,6 +112,7 @@ const CreateItem = (props) => {
                 type="submit"
                 variant="contained"
                 color="primary"
+                disabled={isSubmitting}
                 onClick={() => validateForm()}
               >
                 {content ? t("fields.btn.update") : t("fields.btn.create")}
@@ -110,12 +128,14 @@ const CreateItem = (props) => {
 
 const mapStateToProps = (state) => ({
   isLoading: state.item.loading,
+  error: state.item.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   sendNewTags: (tags) => dispatch(sendTags(tags)),
   sendNewItem: (item) => dispatch(sendItem(item)),
   updateItemData: (item) => dispatch(updateItem(item)),
+  closeModalWindow: () => dispatch(closeModal()),
 });
 
 const ConnectedCreateItem = connect(mapStateToProps, mapDispatchToProps)(CreateItem);

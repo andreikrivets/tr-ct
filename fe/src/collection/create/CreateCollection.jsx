@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
 import {
@@ -19,23 +18,32 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import Skeleton from "react-loading-skeleton";
 
-import { useParams, useRouteMatch } from "react-router-dom";
+import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 import Dropzone from "./components/dropzone/Dropzone";
 import Editor from "../../shared/components/Editor";
 import Selector from "./components/Select";
 import CollectionModel from "./components/collectionModel/CollectionModel";
 import submitFile from "./api/submitFile";
-import Created from "./components/Created";
 
 const CreateCollection = (props) => {
   const isRoute = useRouteMatch("/edit/collection/:collectionId");
+  const history = useHistory();
   const { collectionId } = useParams();
-  const { t, submitCollectionForm, isLoading, collections, updateCollectionForm } = props;
+  const {
+    t,
+    error,
+    submitCollectionForm,
+    isLoading,
+    collections,
+    updateCollectionForm,
+    closeModalWindow,
+    triggerReload,
+  } = props;
+
   const [additionalFields, setAdditionalFields] = useState({ image: false });
   const [file, setFile] = useState({});
   let initialVal;
   let additional;
-
   if (isRoute) {
     const { isExact } = isRoute;
     if (isExact) {
@@ -90,9 +98,16 @@ const CreateCollection = (props) => {
           } else {
             await submitCollectionForm({ values, additionalTags });
           }
+          if (!error.message) {
+            if (initialVal) history.goBack();
+            else {
+              closeModalWindow();
+              if (triggerReload) triggerReload();
+            }
+          }
         }}
       >
-        {({ values, handleChange, validateForm, setFieldValue, submitForm }) => {
+        {({ values, handleChange, validateForm, setFieldValue, submitForm, isSubmitting }) => {
           return (
             <form
               onSubmit={(e) => {
@@ -137,7 +152,7 @@ const CreateCollection = (props) => {
               <Divider style={{ margin: "20px" }} />
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={isSubmitting}
                 variant="contained"
                 color="primary"
                 onClick={() => validateForm()}

@@ -24,6 +24,10 @@ const Profile = (props) => {
     getProfileData(userId);
   }, []);
 
+  const handleReload = () => {
+    getProfileData(userId);
+  };
+
   const { firstName, lastName, email, createdAt, type } = profile;
   const date = new Date(createdAt).toLocaleDateString();
   if (!profile.firstName || isLoading || !collections) return <CircularProgressBar />;
@@ -45,14 +49,20 @@ const Profile = (props) => {
         <Button
           variant="outlined"
           color="secondary"
-          onClick={() => openModalWindow(<CreateCollection />)}
+          onClick={() => openModalWindow(<CreateCollection triggerReload={handleReload} />)}
         >
           {t("btn.createCollection")}
         </Button>
       )}
       {collections.length ? (
         collections.map((collection) => (
-          <Collection user={user} key={uniqid()} data={collection} handleDelete={handleDelete} />
+          <Collection
+            user={user}
+            key={uniqid()}
+            data={collection}
+            handleDelete={handleDelete}
+            triggerReload={handleReload}
+          />
         ))
       ) : (
         <Typography>{t("notExist")}</Typography>
